@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../../components/ui/Button";
+import Button from "../../components/ui/Buttons/Button";
 import { QrCode, Shield, TrendingUp } from "lucide-react";
 import bgImage from "../../assets/bg6.png"
 

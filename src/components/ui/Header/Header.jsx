@@ -10,8 +10,13 @@ function Header() {
         <span className="text-2xl font-bold text-primary">PureMeds</span>
 
         <div className="hidden md:flex items-center space-x-8">
+
+          <Link to={'/'}>
           <span >Home</span>
+          </Link>
+          <Link to={'categories'}>
           <span >Categories</span>
+          </Link>
           <span className="flex items-center gap-1">
             <QrCode size={18} /> <span>Verify Medicine</span>
           </span>
