@@ -18,8 +18,8 @@ const ProductCard = ({ product }) => {
 
       <div className="p-4">
         {/* Product Name */}
-        <Link to={`/product/${product._id}`}>
-          <h3 className="font-semibold text-lg mb-1 text-[#2E2E2E] hover:text-[#5A31F4]">
+        <Link to={`/product/${product.id}`}>
+          <h3 className="font-semibold text-lg mb-1 text-[#2E2E2E] hover:text-primary-hover">
             {product.productName}
           </h3>
         </Link>
@@ -45,9 +45,11 @@ const ProductCard = ({ product }) => {
 
         {/* Actions */}
         <div className="flex justify-between items-center gap-2">
-          <Button variant="outline" size="sm" className="flex-1">
+          <Link to={`/product/${product.id}`}>
+          <Button variant="outline" size="sm" className="flex-1 cursor-pointer">
             View Details
           </Button>
+          </Link>
           <Button
             variant="accent"
             size="sm"

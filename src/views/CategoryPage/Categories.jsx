@@ -10,13 +10,16 @@ const Categories = () => {
   const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'list'
 
   const categories = [
-    { id: "all", name: "All Medicines" },
-    { id: "pain-fever", name: "Pain Relievers" },
-    { id: "infections", name: "Antibiotics" },
-    { id: "antihistamines", name: "Antihistamines" },
-    { id: "vitamins", name: "Vitamins & Supplements" },
-    { id: "cardiac", name: "Cardiac Care" },
-  ];
+  { id: "all", name: "All Medicines" },
+  { id: "pain-fever", name: "Pain & Fever" },
+  { id: "infections", name: "Infections" },
+  { id: "heart-bp", name: "Heart & BP" },
+  { id: "lungs-allergy", name: "Lungs & Allergy" },
+  { id: "stomach-digestion", name: "Stomach & Digestion" },
+  { id: "hormones-diabetes", name: "Hormones & Diabetes" },
+  { id: "brain-mental", name: "Brain & Mental Health" },
+  { id: "vitamins-others", name: "Vitamins & Others" },
+];
 
   // Filter products by category
   const filteredProducts =
@@ -114,16 +117,20 @@ const Categories = () => {
             >
               <div className="flex flex-col sm:flex-row">
                 <div className="sm:w-1/4">
-                  <img
-                    src={product.productImage}
-                    alt={product.productName}
-                    className="w-full h-48 sm:h-full object-cover"
-                  />
+                  <Link to={`/product/${product.id}`}>
+                    <img
+                      src={product.productImage}
+                      alt={product.productName}
+                      className="w-full h-48 sm:h-full object-cover"
+                    />
+                  </Link>
                 </div>
                 <div className="p-4 sm:w-3/4 flex flex-col">
                   <div className="flex-grow">
                     <h3 className="font-semibold text-lg mb-1 text-[#2E2E2E] hover:text-primary-hover">
+                       <Link to={`/product/${product.id}`}>
                       {product.productName}
+                       </Link>
                     </h3>
                     <p className="text-gray-600 text-sm mb-2">
                       <span className="font-medium">Manufacturer:</span>{" "}
@@ -144,9 +151,11 @@ const Categories = () => {
                       Rs. {product.price}
                     </span>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm">
-                        View Details
-                      </Button>
+                      <Link to={`/product/${product.id}`}>
+                        <Button variant="outline" size="sm" className="cursor-pointer">
+                          View Details
+                        </Button>
+                      </Link>
                       <Button
                         variant="accent"
                         size="sm"

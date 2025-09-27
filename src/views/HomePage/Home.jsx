@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../../components/ui/Buttons/Button";
 import { QrCode, Shield, TrendingUp } from "lucide-react";
 import bgImage from "../../assets/bg6.png"
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -19,9 +20,11 @@ function Home() {
                 peace of mind.
               </p>
               <div className="flex flex-wrap gap-4">
+                <Link to={'/categories'}>
                 <Button variant="accent" size="lg">
                   Shop Now
                 </Button>
+                </Link>
                 <Button
                   variant="outline"
                   size="lg"

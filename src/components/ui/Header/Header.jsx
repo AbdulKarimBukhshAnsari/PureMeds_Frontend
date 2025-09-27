@@ -7,18 +7,19 @@ function Header() {
   return (
     <header className="bg-background shadow-sm sticky top-0 z-10 font-sans">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <span className="text-2xl font-bold text-primary">PureMeds</span>
+        <Link to={"/"} >
+          <span className="text-2xl font-bold text-primary">PureMeds</span>
+        </Link>
 
         <div className="hidden md:flex items-center space-x-8">
-
-          <Link to={'/'}>
-          <span >Home</span>
+          <Link to={"/"}>
+            <span className="hover:text-primary-hover">Home</span>
           </Link>
-          <Link to={'categories'}>
-          <span >Categories</span>
+          <Link to={"categories"}>
+            <span className="hover:text-primary-hover">Categories</span>
           </Link>
-          <span className="flex items-center gap-1">
-            <QrCode size={18} /> <span>Verify Medicine</span>
+          <span className="flex items-center gap-1 hover:text-primary-hover">
+            <QrCode size={18} /> <span >Verify Medicine</span>
           </span>
         </div>
         <div className="hidden md:flex items-center space-x-4">
@@ -42,13 +43,25 @@ function Header() {
       {isMenuOpen && (
         <div className="md:hidden bg-white pb-4 px-4">
           <nav className="flex flex-col space-y-3">
-            Home Categories
-            <QrCode size={18} />
-            <span>Verify Medicine</span>
-            <ShoppingCart size={18} />
-            <span>Cart (3)</span>
-            <User size={18} />
-            <span>Admin</span>
+            <Link to="/" className="p-2" onClick={() => setIsMenuOpen(false)}>
+              Home
+            </Link>
+            <Link
+              to="/categories"
+              className="p-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Categories
+            </Link>
+            <div className="p-2 flex items-center gap-2">
+              <span>Verify Medicine</span>
+            </div>
+            <div className="p-2 flex items-center gap-2">
+              <span>Cart</span>
+            </div>
+            <div className="p-2 flex items-center gap-2">
+              <span>Profile</span>
+            </div>
           </nav>
         </div>
       )}
