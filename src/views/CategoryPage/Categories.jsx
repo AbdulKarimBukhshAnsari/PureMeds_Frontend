@@ -10,16 +10,16 @@ const Categories = () => {
   const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'list'
 
   const categories = [
-  { id: "all", name: "All Medicines" },
-  { id: "pain-fever", name: "Pain & Fever" },
-  { id: "infections", name: "Infections" },
-  { id: "heart-bp", name: "Heart & BP" },
-  { id: "lungs-allergy", name: "Lungs & Allergy" },
-  { id: "stomach-digestion", name: "Stomach & Digestion" },
-  { id: "hormones-diabetes", name: "Hormones & Diabetes" },
-  { id: "brain-mental", name: "Brain & Mental Health" },
-  { id: "vitamins-others", name: "Vitamins & Others" },
-];
+    { id: "all", name: "All Medicines" },
+    { id: "pain-fever", name: "Pain & Fever" },
+    { id: "infections", name: "Infections" },
+    { id: "heart-bp", name: "Heart & BP" },
+    { id: "lungs-allergy", name: "Lungs & Allergy" },
+    { id: "stomach-digestion", name: "Stomach & Digestion" },
+    { id: "hormones-diabetes", name: "Hormones & Diabetes" },
+    { id: "brain-mental", name: "Brain & Mental Health" },
+    { id: "vitamins-others", name: "Vitamins & Others" },
+  ];
 
   // Filter products by category
   const filteredProducts =
@@ -104,70 +104,13 @@ const Categories = () => {
         // Grid View
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProducts.map((product) => (
-            <ProductCard key={product._id} product={product} />
+            <ProductCard key={product._id} product={product} view={"grid"} />
           ))}
         </div>
       ) : (
-        // List View
         <div className="space-y-4">
           {filteredProducts.map((product) => (
-            <div
-              key={product.id}
-              className="bg-background rounded-lg shadow-md overflow-hidden hover:shadow-lg transition"
-            >
-              <div className="flex flex-col sm:flex-row">
-                <div className="sm:w-1/4">
-                  <Link to={`/product/${product.id}`}>
-                    <img
-                      src={product.productImage}
-                      alt={product.productName}
-                      className="w-full h-48 sm:h-full object-cover"
-                    />
-                  </Link>
-                </div>
-                <div className="p-4 sm:w-3/4 flex flex-col">
-                  <div className="flex-grow">
-                    <h3 className="font-semibold text-lg mb-1 text-[#2E2E2E] hover:text-primary-hover">
-                       <Link to={`/product/${product.id}`}>
-                      {product.productName}
-                       </Link>
-                    </h3>
-                    <p className="text-gray-600 text-sm mb-2">
-                      <span className="font-medium">Manufacturer:</span>{" "}
-                      {product.manufacturer}
-                    </p>
-
-                    <p className="text-gray-500 text-sm mb-2">
-                      {product.purpose}
-                    </p>
-                    <div className="mb-3">
-                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs mr-2">
-                        In Stock: {product.availableStock}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between mt-2">
-                    <span className="font-bold text-lg">
-                      Rs. {product.price}
-                    </span>
-                    <div className="flex gap-2">
-                      <Link to={`/product/${product.id}`}>
-                        <Button variant="outline" size="sm" className="cursor-pointer">
-                          View Details
-                        </Button>
-                      </Link>
-                      <Button
-                        variant="accent"
-                        size="sm"
-                        className="flex items-center justify-center gap-1"
-                      >
-                        <span>Add to Cart</span>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ProductCard key={product._id} product={product} view={"list"} />
           ))}
         </div>
       )}

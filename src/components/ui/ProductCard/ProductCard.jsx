@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import Button from "../Buttons/Button";
 
-
-const ProductCard = ({ product }) => {
-  return (
+const ProductCard = ({ product, view }) => {
+  return view == "grid" ? (
     <div className="bg-background rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
       {/* Product Image */}
       <Link to={`/product/${product.id}`}>
@@ -24,7 +23,8 @@ const ProductCard = ({ product }) => {
           </h3>
         </Link>
         <p className="text-gray-600 text-sm mb-2">
-          <span className="font-medium">Manufacturer:</span> {product.manufacturer}
+          <span className="font-medium">Manufacturer:</span>{" "}
+          {product.manufacturer}
         </p>
 
         {/* Purpose */}
@@ -46,9 +46,13 @@ const ProductCard = ({ product }) => {
         {/* Actions */}
         <div className="flex justify-between items-center gap-2">
           <Link to={`/product/${product.id}`}>
-          <Button variant="outline" size="sm" className="flex-1 cursor-pointer">
-            View Details
-          </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex-1 cursor-pointer"
+            >
+              View Details
+            </Button>
           </Link>
           <Button
             variant="accent"
@@ -58,6 +62,64 @@ const ProductCard = ({ product }) => {
             <ShoppingCart size={16} />
             <span>Add</span>
           </Button>
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div>
+      <div
+        key={product.id}
+        className="bg-background rounded-lg shadow-md overflow-hidden hover:shadow-lg transition"
+      >
+        <div className="flex flex-col sm:flex-row">
+          <div className="sm:w-1/4">
+            <Link to={`/product/${product.id}`}>
+              <img
+                src={product.productImage}
+                alt={product.productName}
+                className="w-full h-48 sm:h-full object-cover"
+              />
+            </Link>
+          </div>
+          <div className="p-4 sm:w-3/4 flex flex-col">
+            <div className="flex-grow">
+              <h3 className="font-semibold text-lg mb-1 text-[#2E2E2E] hover:text-primary-hover">
+                <Link to={`/product/${product.id}`}>{product.productName}</Link>
+              </h3>
+              <p className="text-gray-600 text-sm mb-2">
+                <span className="font-medium">Manufacturer:</span>{" "}
+                {product.manufacturer}
+              </p>
+
+              <p className="text-gray-500 text-sm mb-2">{product.purpose}</p>
+              <div className="mb-3">
+                <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs mr-2">
+                  In Stock: {product.availableStock}
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between mt-2">
+              <span className="font-bold text-lg">Rs. {product.price}</span>
+              <div className="flex gap-2">
+                <Link to={`/product/${product.id}`}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="cursor-pointer"
+                  >
+                    View Details
+                  </Button>
+                </Link>
+                <Button
+                  variant="accent"
+                  size="sm"
+                  className="flex items-center justify-center gap-1"
+                >
+                  <span>Add to Cart</span>
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
