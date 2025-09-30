@@ -19,7 +19,10 @@ function Header() {
             <span className="hover:text-primary-hover">Categories</span>
           </Link>
           <span className="flex items-center gap-1 hover:text-primary-hover">
-            <QrCode size={18} /> <span >Verify Medicine</span>
+            <QrCode size={18} /> 
+          <Link to={'verify'}>
+            <span >Verify Medicine</span>
+          </Link>
           </span>
         </div>
         <div className="hidden md:flex items-center space-x-4">
