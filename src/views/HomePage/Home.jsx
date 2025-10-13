@@ -3,6 +3,9 @@ import Button from "../../components/ui/Buttons/Button";
 import { QrCode, Shield, TrendingUp } from "lucide-react";
 import bgImage from "../../assets/bg6.png"
 import { Link } from "react-router-dom";
+import { products } from "../../utils/mockData";
+import ProductCard from "../../components/ui/ProductCard/ProductCard";
+
 
 function Home() {
   return (
@@ -90,13 +93,15 @@ function Home() {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-3xl font-semibold">Featured Medicines</h2>
+            <Link to={'/categories'}>
             <Button variant="outline">View All</Button>
+            </Link>
           </div>
-          {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product._id} product={product} view={"grid"} />
             ))}
-          </div> */}
+          </div>
         </div>
       </section>
       {/* Verification Banner */}

@@ -7,7 +7,7 @@ function Header() {
   return (
     <header className="bg-background shadow-sm sticky top-0 z-10 font-sans">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link to={"/"} >
+        <Link to={"/"}>
           <span className="text-2xl font-bold text-primary">PureMeds</span>
         </Link>
 
@@ -19,18 +19,15 @@ function Header() {
             <span className="hover:text-primary-hover">Categories</span>
           </Link>
           <span className="flex items-center gap-1 hover:text-primary-hover">
-            <QrCode size={18} /> 
-          <Link to={'verify'}>
-            <span >Verify Medicine</span>
-          </Link>
+            <QrCode size={18} />
+            <Link to={"verify"}>
+              <span>Verify Medicine</span>
+            </Link>
           </span>
         </div>
         <div className="hidden md:flex items-center space-x-4">
           <div className="text-text  p-2 relative">
             <ShoppingCart size={22} />
-            <span className="absolute -top-1 -right-1 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-              3
-            </span>
           </div>
 
           <User size={22} />

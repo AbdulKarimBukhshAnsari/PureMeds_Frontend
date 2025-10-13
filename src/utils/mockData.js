@@ -12,7 +12,7 @@ export const products = [
     availableStock: 500,
     category: "pain-fever",
     productImage:
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWVkaWNpbmV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=600"
   },
   {
     id: "2",
@@ -25,8 +25,22 @@ export const products = [
     availableStock: 300,
     category: "infections",
     productImage:
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=600&auto=format&fit=crop"
-  }
+      "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fG1lZGljaW5lfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=600"
+  },
+  {
+  id: "3",
+  productName: "Paracetamol 500mg",
+  chemicalName: "Acetaminophen",
+  manufacturer: "MedLife Laboratories",
+  price: 180,
+  purpose: "Used to relieve pain and reduce fever.",
+  sideEffects: ["Nausea", "Allergic reactions", "Liver damage (in overdose)"],
+  availableStock: 450,
+  category: "pain relief",
+  productImage:
+    "https://images.unsplash.com/photo-1577401132921-cb39bb0adcff?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fG1lZGljaW5lfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=600"
+}
+
 ];
 
 export const SupplyChain = [{
