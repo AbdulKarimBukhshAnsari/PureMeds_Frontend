@@ -5,6 +5,7 @@ import Categories from '../../views/CategoryPage/Categories'
 import Layout from '../../Layout'
 import ProductDetail from '../../views/ProductPage/ProductDetails'
 import VerifyMedicine from '../../views/VerifyMedicinePage/VerifyMedicine'
+import Complaints from '../../views/ComplaintPage/Complaints'
 
 function AppRouter() {
   return (
@@ -14,6 +15,7 @@ function AppRouter() {
         <Route path='categories' element={<Categories/>}/>
         <Route path='product/:id' element={<ProductDetail/>}/>
         <Route path='verify' element={<VerifyMedicine/>}/>
+        <Route path='complaint' element={<Complaints/>}/>
         </Route>
     </Routes>
   )
