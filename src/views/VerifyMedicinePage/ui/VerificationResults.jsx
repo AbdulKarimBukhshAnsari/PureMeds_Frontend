@@ -2,6 +2,7 @@ import { AlertTriangle, CheckCircle } from "lucide-react";
 import React from "react";
 import { SupplyChain } from "../../../utils/mockData";
 import Button from "../../../components/ui/Buttons/Button";
+import { Link } from "react-router-dom";
 
 function VerificationResults({
   result,
@@ -98,15 +99,19 @@ function VerificationResults({
             </p>
           </div>
           <div className="mt-8 border-t border-gray-200 pt-6 text-center">
-            <Button
-              onClick={() => {
-                VerificationMethod?.(null);
-                VerificationResult?.(null);
-              }}
-              
-            >
-              Verify Another Medicine
-            </Button>
+            <div className="flex justify-center space-x-4">
+              <Button
+                onClick={() => {
+                  VerificationMethod?.(null);
+                  VerificationResult?.(null);
+                }}
+              >
+                Verify Another Medicine
+              </Button>
+              <Link to={"/complaint"}>
+                <Button>Report Fake Medicine</Button>
+              </Link>
+            </div>
           </div>
         </div>
       )}

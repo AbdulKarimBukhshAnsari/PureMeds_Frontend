@@ -12,13 +12,16 @@
   "dependencies": {
     "@clerk/clerk-react": "^5.47.0",
     "@fontsource/poppins": "^5.2.7",
+    "@hookform/resolvers": "^5.2.2",
     "@tailwindcss/vite": "^4.1.12",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.544.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-hook-form": "^7.65.0",
     "react-router-dom": "^7.9.1",
-    "tailwindcss": "^4.1.12"
+    "tailwindcss": "^4.1.12",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
