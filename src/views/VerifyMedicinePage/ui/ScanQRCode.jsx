@@ -10,7 +10,7 @@ function ScanQRCode({ onVerified, onFake, onBack }) {
   const readerRef = useRef(null);
 
   // TBI (to be implemented)
-  // function for searching whether the batch id belong on the etherum block chain
+  // function for searching whether the batch id belong on the etherum block chain (searching done via hash)
   // Function to start scanning
   const startCamera = async (cameraId) => {
     try {
