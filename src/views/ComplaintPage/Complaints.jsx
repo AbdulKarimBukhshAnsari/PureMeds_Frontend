@@ -5,8 +5,19 @@ import { Link } from "react-router-dom";
 
 function Complaints() {
   return (
-    <div>
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden my-7  ">
+    <div className="relative">
+      {/* Back Button */}
+      <div className="max-w-4xl mx-auto mt-6">
+        <Link
+          to="/verify"
+          className="inline-flex items-center text-primary hover:text-primary-hover font-medium transition"
+        >
+          <ArrowLeft/>
+        </Link>
+      </div>
+
+      {/* Complaint Card */}
+      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden my-7">
         <div className="bg-primary text-white p-6 flex items-center rounded-t-lg shadow-md">
           <AlertTriangle size={24} className="mr-3" />
           <div>
@@ -18,6 +29,7 @@ function Complaints() {
             </p>
           </div>
         </div>
+
         <div className="p-6">
           <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
             <div className="flex">
