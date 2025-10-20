@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import Button from "../Buttons/Button";
+import { useCart } from "../../../context/Cart/CartContext";
 
 const ProductCard = ({ product, view }) => {
+  const [quantity, setQuantity] = useState(1); // by default add one medicine, and they can add or subtract in the product details page
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart(product, quantity);
+  };
+
   return view == "grid" ? (
     <div className="bg-background rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
       {/* Product Image */}
@@ -58,6 +66,7 @@ const ProductCard = ({ product, view }) => {
             variant="accent"
             size="sm"
             className="flex items-center justify-center gap-1"
+            onClick={handleAddToCart}
           >
             <ShoppingCart size={16} />
             <span>Add</span>
@@ -114,6 +123,7 @@ const ProductCard = ({ product, view }) => {
                   variant="accent"
                   size="sm"
                   className="flex items-center justify-center gap-1"
+                   onClick={handleAddToCart}
                 >
                   <span>Add to Cart</span>
                 </Button>

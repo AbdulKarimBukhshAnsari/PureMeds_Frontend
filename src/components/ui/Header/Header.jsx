@@ -1,9 +1,11 @@
 import { Menu, QrCode, ShoppingCart, User, X } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useCart } from "../../../context/Cart/CartContext";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const {cartItems} = useCart()
   return (
     <header className="bg-background shadow-sm sticky top-0 z-10 font-sans">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -26,9 +28,16 @@ function Header() {
           </span>
         </div>
         <div className="hidden md:flex items-center space-x-4">
-          <div className="text-text  p-2 relative">
+          <Link to={'/cart'}>
+          <div className="text-text p-1.5 relative text-support hover:text-primary transition-colors">
             <ShoppingCart size={22} />
+             {cartItems.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-accent text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                {cartItems.length}
+              </span>
+            )}
           </div>
+          </Link>
 
           <User size={22} />
         </div>
@@ -53,12 +62,16 @@ function Header() {
             >
               Categories
             </Link>
+            <Link to={'/verify'}>
             <div className="p-2 flex items-center gap-2">
               <span>Verify Medicine</span>
             </div>
+            </Link>
+            <Link to={"/cart"}>
             <div className="p-2 flex items-center gap-2">
               <span>Cart</span>
             </div>
+            </Link>
             <div className="p-2 flex items-center gap-2">
               <span>Profile</span>
             </div>

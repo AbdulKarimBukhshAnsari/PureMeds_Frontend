@@ -29,11 +29,11 @@ export const products = [
   },
   {
   id: "3",
-  productName: "Paracetamol 500mg",
+  productName: "Panadol 300mg",
   chemicalName: "Acetaminophen",
   manufacturer: "MedLife Laboratories",
   price: 180,
-  purpose: "Used to relieve pain and reduce fever.",
+  purpose: "Used to reduce fever and relieve mild to moderate pain.",
   sideEffects: ["Nausea", "Allergic reactions", "Liver damage (in overdose)"],
   availableStock: 450,
   category: "pain relief",

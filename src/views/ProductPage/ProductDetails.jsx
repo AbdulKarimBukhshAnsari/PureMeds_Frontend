@@ -3,21 +3,36 @@ import { Link, useParams } from "react-router-dom";
 import { ShoppingCart, ArrowLeft } from "lucide-react";
 import Button from "../../components/ui/Buttons/Button";
 import { products } from "../../utils/mockData";
+import { useCart } from "../../context/Cart/CartContext";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const product = products.find((p) => p.id === id);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(1); // for showing the quantity on the page
+  const { cartItems, addToCart, updateQuantity } = useCart();
 
-  const increaseQty = () => {
-    if (quantity < product.availableStock) {
-      setQuantity(quantity + 1);
+  const cartItem = cartItems.find((item) => item.id === product.id); // checking if the product already exsists in the cart
+
+  const handleAddToCart = () => {
+    if (cartItem) {
+      updateQuantity(product.id, quantity);
+    } else {
+      addToCart(product, quantity);
     }
   };
-
+  // for increasing quantity in the cart
+  const increaseQty = () => {
+    if (quantity < product.availableStock) {
+      const newQty = quantity + 1;
+    setQuantity(newQty);
+    updateQuantity(product.id, newQty);
+    }
+  };
   const decreaseQty = () => {
     if (quantity > 1) {
-      setQuantity(quantity - 1);
+      const newQty = quantity - 1;
+    setQuantity(newQty);
+    updateQuantity(product.id, newQty);
     }
   };
 
@@ -131,6 +146,7 @@ const ProductDetail = () => {
                 variant="primary"
                 size="md"
                 className="flex items-center justify-center gap-2 px-6"
+                onClick={handleAddToCart}
               >
                 <ShoppingCart size={20} />
                 <span>Add to Cart</span>
