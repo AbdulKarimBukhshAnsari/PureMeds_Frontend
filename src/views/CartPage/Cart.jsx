@@ -4,12 +4,12 @@
 // make order summary comp for boh cart and checkout
 // strip payment thing (.24 id)
 // both new chats
-import React, { useState } from "react";
+import React from "react";
 import CartItemCard from "./ui/CartItemCard";
 import Button from "../../components/ui/Buttons/Button";
 import { Link } from "react-router-dom";
 import { ArrowRight, ShoppingBag } from "lucide-react";
-import OrderSummary from "./ui/OrderSummary";
+import OrderSummary from "../../components/ui/OrderSummary/OrderSummary";
 import CartEmpty from "./ui/CartEmpty";
 import { useCart } from "../../context/Cart/CartContext";
 

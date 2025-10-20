@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
-import InputField from "./InputField";
-import SelectField from "./SelectField";
+import InputField from "../../../components/ui/Form/InputField";
+import SelectField from "../../../components/ui/Form/SelectField";
 import SuccessMessage from "./SuccessMessage";
 import FileUpload from "./FileUpload";
-import { Info } from "lucide-react";
 
 const schema = Yup.object({
   medicineName: Yup.string().required("Medicine name is required"),
