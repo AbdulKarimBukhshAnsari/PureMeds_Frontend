@@ -24,15 +24,15 @@ const ProductDetail = () => {
   const increaseQty = () => {
     if (quantity < product.availableStock) {
       const newQty = quantity + 1;
-    setQuantity(newQty);
-    updateQuantity(product.id, newQty);
+      setQuantity(newQty);
+      updateQuantity(product.id, newQty);
     }
   };
   const decreaseQty = () => {
     if (quantity > 1) {
       const newQty = quantity - 1;
-    setQuantity(newQty);
-    updateQuantity(product.id, newQty);
+      setQuantity(newQty);
+      updateQuantity(product.id, newQty);
     }
   };
 
@@ -67,90 +67,86 @@ const ProductDetail = () => {
             <img
               src={product.productImage}
               alt={product.productName}
-              className="w-full h-auto rounded-lg"
+              className="w-full h-full rounded-lg"
             />
           </div>
 
           {/* Right: Details */}
           <div>
-            {/* Product Title */}
-            <h1 className="text-3xl font-bold mb-2">{product.productName}</h1>
-            <p className="text-gray-600 mb-4">{product.purpose}</p>
+            <div className="flex flex-row">
+              {/* Product Title */}
+              <h1 className="text-3xl text-primary font-bold mb-2">
+                {product.productName}
+              </h1>
+            </div>
+            <p className="text-gray-600 text-lg mb-4">{product.purpose}</p>
 
-            {/* Manufacturer / Info */}
-            <div className="mb-4 space-y-1">
-              <p className="text-sm text-gray-500">
-                <span className="font-semibold">Chemical Name:</span>{" "}
-                {product.chemicalName}
+            {/* Manufacturer + Info + Side Effects*/}
+            <div className="mb-4 mt-6 space-y-3">
+              <p className="text-gray-600">
+                <p className="font-semibold text-primary">Chemical Name</p>
+                <p>{product.chemicalName}</p>
               </p>
-              <p className="text-sm text-gray-500">
-                <span className="font-semibold">Manufacturer:</span>{" "}
-                {product.manufacturer}
+              <p className="text-gray-600">
+                <p className="font-semibold text-primary">Manufacturer</p>
+                <p>{product.manufacturer}</p>
               </p>
-              <p className="text-sm text-gray-500">
-                <span className="font-semibold">Category:</span>{" "}
-                {product.category}
+              <p className="text-gray-600">
+                <p className="font-semibold text-primary">Category</p>
+                <p>{product.category}</p>
+              </p>
+              <p className="text-gray-600">
+                <p className="font-semibold text-primary">Side Effects</p>
+                <p>{product.sideEffects.join(", ")}</p>
               </p>
             </div>
 
-            {/* Side Effects */}
-            <div className="mb-6">
-              <h2 className="text-gray-500 font-semibold text-md mb-2">
-                Possible Side Effects
-              </h2>
-              <ul className="list-disc list-inside text-gray-600 text-sm">
-                {product.sideEffects.map((effect, idx) => (
-                  <li key={idx}>{effect}</li>
-                ))}
-              </ul>
-            </div>
+            {/* Price + Cart + Quantity */}
+            <div className="flex flex-row align-justify items-center mt-10">
+              {/* Quantity + Add to Cart */}
+              <div className="flex items-center gap-4">
+                {/* Quantity Counter */}
+                <div className="flex items-center border rounded-md overflow-hidden">
+                  <button
+                    className="px-4 py-2 bg-gray-100 hover:bg-gray-300 transition cursor-pointer rounded-l-md"
+                    onClick={decreaseQty}
+                    disabled={quantity === 1}
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    value={quantity}
+                    readOnly
+                    className="flex justify-center items-center w-11 text-center focus:outline-none"
+                  />
+                  <button
+                    className="px-4 py-2 bg-gray-100 hover:bg-gray-300 transition cursor-pointer rounded-r-md"
+                    onClick={increaseQty}
+                    disabled={quantity === product.availableStock}
+                  >
+                    +
+                  </button>
+                </div>
 
-            {/* Price + Stock */}
-            <div className="flex items-center gap-4 mb-6">
-              <span className="text-2xl font-bold text-primary">
-                Rs. {product.price}
-              </span>
-              <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
-                In Stock: {product.availableStock}
-              </span>
-            </div>
-
-            {/* Quantity + Add to Cart */}
-            <div className="flex items-center gap-4">
-              {/* Quantity Counter */}
-              <div className="flex items-center border rounded-md overflow-hidden">
-                <button
-                  className="px-4 py-2 bg-gray-100 hover:bg-gray-300 transition cursor-pointer rounded-l-md"
-                  onClick={decreaseQty}
-                  disabled={quantity === 1}
+                {/* Add to Cart Button */}
+                <Button
+                  variant="primary"
+                  size="md"
+                  className="flex items-center justify-center gap-2 px-6"
+                  onClick={handleAddToCart}
                 >
-                  -
-                </button>
-                <input
-                  type="number"
-                  value={quantity}
-                  readOnly
-                  className="flex justify-center items-center w-11 text-center focus:outline-none"
-                />
-                <button
-                  className="px-4 py-2 bg-gray-100 hover:bg-gray-300 transition cursor-pointer rounded-r-md"
-                  onClick={increaseQty}
-                  disabled={quantity === product.availableStock}
-                >
-                  +
-                </button>
+                  <ShoppingCart size={20} />
+                  <span>Add to Cart</span>
+                </Button>
               </div>
 
-              {/* Add to Cart Button */}
-              <Button
-                variant="primary"
-                size="md"
-                className="flex items-center justify-center gap-2 px-6"
-                onClick={handleAddToCart}
-              >
-                <ShoppingCart size={20} />
-                <span>Add to Cart</span>
-              </Button>
+              {/* Price */}
+              <div className="flex ml-35">
+                <span className="text-4xl font-bold text-primary">
+                  Rs. {product.price}
+                </span>
+              </div>
             </div>
           </div>
         </div>
