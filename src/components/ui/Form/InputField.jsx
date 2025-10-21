@@ -3,7 +3,7 @@ import React from "react";
 const InputField = ({ label, name, type = "text", register, error, placeholder }) => (
   <div>
     <label className="block text-sm font-medium text-gray-700 mb-1">
-      {label}*
+      {label}
     </label>
     <input
       {...register(name)}

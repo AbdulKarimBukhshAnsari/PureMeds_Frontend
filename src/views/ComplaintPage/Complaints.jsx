@@ -1,7 +1,7 @@
 import React from "react";
-import Form from "./ui/Form";
 import { AlertTriangle, ArrowLeft, Info } from "lucide-react";
 import { Link } from "react-router-dom";
+import ComplaintForm from "./ui/ComplaintForm";
 
 function Complaints() {
   return (
@@ -44,7 +44,7 @@ function Complaints() {
             </div>
           </div>
 
-          <Form />
+          <ComplaintForm/>
         </div>
       </div>
     </div>

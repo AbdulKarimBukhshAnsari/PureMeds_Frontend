@@ -1,49 +1,51 @@
 import React, { useState } from 'react'
 import { useCart } from '../../context/Cart/CartContext';
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, Controller } from "react-hook-form";
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import CheckoutForm from './ui/CheckoutForm';
+import OrderSummary from '../../components/ui/OrderSummary/OrderSummary';
 
+// things to do
+// use previously built components of input field and select field
+// make form seperately in ui for the fields
+// make seperate checkout page 
+// mke seperate strip component
+// id: magic pattern and .24 - see history 
 function Checkout() {
   const { cartItems } = useCart();
-  const [paymentMethod, setPaymentMethod] = useState("jazzcash");
   const [submitted, setSubmitted] = useState(false);
-
-  const subtotal = cartItems.reduce(
-    (total, item) => total + item.price * (item.quantity || 1),
+const subtotal = cartItems.reduce(
+    (t, i) => t + i.price * (i.quantity || 1),
     0
   );
-  const shipping = 150;
+  const shipping = 200;
   const total = subtotal + shipping;
-
-  const schema = Yup.object({
-    firstName: Yup.string().required("First name is required"),
-    lastName: Yup.string().required("Last name is required"),
-    email: Yup.string().email("Invalid email").required("Email is required"),
-    phone: Yup.string()
-      .matches(/^\d{11}$/, "Phone must be 11 digits")
-      .required("Phone is required"),
-    address: Yup.string().required("Address is required"),
-    city: Yup.string().required("City is required"),
-    postalCode: Yup.string()
-      .matches(/^\d{5}$/, "Postal Code must be 5 digits")
-      .required("Postal code is required"),
-  });
-    const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-   const onSubmit = async (data) => {
-    console.log("Order Data:", { ...data, paymentMethod, cartItems, total });
-    // handle stripe payment logic 
-  };
+ 
   return (
-    <div>
-      Checkout Page
+    <div className='bg-background'>
+       <div className=" container mx-auto px-4 py-8">
+      <div className="flex items-center mb-8">
+        <Link
+          to="/cart"
+          className="text-primary hover:text-primary/80 flex items-center"
+        >
+          <ArrowLeft size={20} className="mr-2" /> Back to Cart
+        </Link>
+      </div>
+
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* LEFT SIDE - Form + Payment */}
+        <div className="lg:w-2/3 space-y-8">
+          <CheckoutForm cartItems={cartItems} onSubmitSuccess={() => setSubmitted(true)} />
+          
+        </div>
+
+        {/* RIGHT SIDE - Order Summary */}
+        <div className="lg:w-1/3">
+          <OrderSummary items={cartItems} showItems total={total} subtotal={subtotal} shipping={shipping} />
+        </div>
+      </div>
+    </div>
     </div>
   )
 }

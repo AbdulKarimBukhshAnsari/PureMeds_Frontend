@@ -18,7 +18,7 @@ const schema = Yup.object({
   city: Yup.string().required("City is required"),
   qrCode: Yup.string().required("QR Code is required"),
 });
-function Form() {
+function ComplaintForm() {
   const [submitted, setSubmitted] = useState(false);
   const {
     register,
@@ -135,4 +135,4 @@ function Form() {
   </div>;
 }
 
-export default Form;
+export default ComplaintForm;
