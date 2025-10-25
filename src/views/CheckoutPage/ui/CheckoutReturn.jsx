@@ -58,7 +58,7 @@ function CheckoutReturn() {
       )}
 
       {status === "failed" && (
-        <div className="bg-white p-8 rounded-xl shadow-md text-center max-w-md w-full">
+        <div className="bg-white p-8 rounded-xl shadow-md text-center max-w-md w-full ">
           <XCircle className="text-red-500 w-16 h-16 mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-gray-800 mb-2">
             Payment Failed ❌

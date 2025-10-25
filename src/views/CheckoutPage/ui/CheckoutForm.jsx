@@ -59,12 +59,14 @@ function CheckoutForm({ cartItems, onSubmitSuccess }) {
               name="firstName"
               register={register}
               error={errors.firstName}
+              placeholder={'e.g John'}
             />
             <InputField
               label="Last Name"
               name="lastName"
               register={register}
               error={errors.lastName}
+              placeholder={'e.g Max'}
             />
             <InputField
               label="Email"
@@ -72,6 +74,7 @@ function CheckoutForm({ cartItems, onSubmitSuccess }) {
               type="email"
               register={register}
               error={errors.email}
+              placeholder={'e.g johnMax24@gmail.com'}
             />
             <InputField
               label="Phone"
@@ -79,6 +82,7 @@ function CheckoutForm({ cartItems, onSubmitSuccess }) {
               type="tel"
               register={register}
               error={errors.phone}
+              placeholder={"e.g 03312546789"}
             />
           </div>
         </div>
@@ -94,6 +98,7 @@ function CheckoutForm({ cartItems, onSubmitSuccess }) {
               name="address"
               register={register}
               error={errors.address}
+              placeholder={"e.g A-1 Apartment Name floor No."}
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <InputField
@@ -101,18 +106,21 @@ function CheckoutForm({ cartItems, onSubmitSuccess }) {
                 name="city"
                 register={register}
                 error={errors.city}
+                placeholder={"e.g Karachi"}
               />
               <InputField
                 label="State"
                 name="state"
                 register={register}
                 error={errors.state}
+                placeholder={"e.g Sindh"}
               />
               <InputField
                 label="ZIP Code"
                 name="zip"
                 register={register}
                 error={errors.zip}
+                placeholder={'e.g 1234'}
               />
             </div>
             <SelectField
