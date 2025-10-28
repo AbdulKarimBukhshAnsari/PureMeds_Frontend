@@ -43,118 +43,113 @@ function CheckoutForm({ cartItems, onSubmitSuccess }) {
     onSubmitSuccess();
   };
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="lg:col-span-2 space-y-8"
-      >
-        {/* PERSONAL INFORMATION */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-medium text-[#156874] mb-4">
-            Personal Information
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <InputField
-              label="First Name"
-              name="firstName"
-              register={register}
-              error={errors.firstName}
-              placeholder={'e.g John'}
-            />
-            <InputField
-              label="Last Name"
-              name="lastName"
-              register={register}
-              error={errors.lastName}
-              placeholder={'e.g Max'}
-            />
-            <InputField
-              label="Email"
-              name="email"
-              type="email"
-              register={register}
-              error={errors.email}
-              placeholder={'e.g johnMax24@gmail.com'}
-            />
-            <InputField
-              label="Phone"
-              name="phone"
-              type="tel"
-              register={register}
-              error={errors.phone}
-              placeholder={"e.g 03312546789"}
-            />
-          </div>
+    <div onSubmit={handleSubmit(onSubmit)} className="lg:col-span-2 space-y-8">
+      {/* PERSONAL INFORMATION */}
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-xl font-medium text-[#156874] mb-4">
+          Personal Information
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <InputField
+            label="First Name"
+            name="firstName"
+            register={register}
+            error={errors.firstName}
+            placeholder={"e.g John"}
+          />
+          <InputField
+            label="Last Name"
+            name="lastName"
+            register={register}
+            error={errors.lastName}
+            placeholder={"e.g Max"}
+          />
+          <InputField
+            label="Email"
+            name="email"
+            type="email"
+            register={register}
+            error={errors.email}
+            placeholder={"e.g johnMax24@gmail.com"}
+          />
+          <InputField
+            label="Phone"
+            name="phone"
+            type="tel"
+            register={register}
+            error={errors.phone}
+            placeholder={"e.g 03312546789"}
+          />
         </div>
+      </div>
 
-        {/* SHIPPING ADDRESS */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-medium text-[#156874] mb-4">
-            Shipping Address
-          </h2>
-          <div className="space-y-4">
+      {/* SHIPPING ADDRESS */}
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-xl font-medium text-[#156874] mb-4">
+          Shipping Address
+        </h2>
+        <div className="space-y-4">
+          <InputField
+            label="Address"
+            name="address"
+            register={register}
+            error={errors.address}
+            placeholder={"e.g A-1 Apartment Name floor No."}
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <InputField
-              label="Address"
-              name="address"
+              label="City"
+              name="city"
               register={register}
-              error={errors.address}
-              placeholder={"e.g A-1 Apartment Name floor No."}
+              error={errors.city}
+              placeholder={"e.g Karachi"}
             />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <InputField
-                label="City"
-                name="city"
-                register={register}
-                error={errors.city}
-                placeholder={"e.g Karachi"}
-              />
-              <InputField
-                label="State"
-                name="state"
-                register={register}
-                error={errors.state}
-                placeholder={"e.g Sindh"}
-              />
-              <InputField
-                label="ZIP Code"
-                name="zip"
-                register={register}
-                error={errors.zip}
-                placeholder={'e.g 1234'}
-              />
-            </div>
-            <SelectField
-              label="Country"
-              name="country"
+            <InputField
+              label="State"
+              name="state"
               register={register}
-              error={errors.country}
-              options={[
-                "United States",
-                "Canada",
-                "United Kingdom",
-                "Australia",
-                "Pakistan",
-              ]}
+              error={errors.state}
+              placeholder={"e.g Sindh"}
+            />
+            <InputField
+              label="ZIP Code"
+              name="zip"
+              register={register}
+              error={errors.zip}
+              placeholder={"e.g 1234"}
             />
           </div>
+          <SelectField
+            label="Country"
+            name="country"
+            register={register}
+            error={errors.country}
+            options={[
+              "United States",
+              "Canada",
+              "United Kingdom",
+              "Australia",
+              "Pakistan",
+            ]}
+          />
         </div>
-        {/* Payment Method */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-medium text-primary mb-4">
-            Payment Method
-          </h2>
-          <PaymentSection cartItems={cartItems} />
-        </div>
-        {/* SUBMIT */}
-        <Button
-          variant="primary"
-          type="submit"
-          className="w-full"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? "Processing..." : "Place Order"}
-        </Button>
-      </form>
+      </div>
+      {/* Payment Method */}
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-xl font-medium text-primary mb-4">
+          Payment Method
+        </h2>
+        <PaymentSection cartItems={cartItems} />
+      </div>
+      {/* SUBMIT */}
+      <Button
+        variant="primary"
+        type="submit"
+        className="w-full"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? "Processing..." : "Place Order"}
+      </Button>
     </div>
   );
 }
