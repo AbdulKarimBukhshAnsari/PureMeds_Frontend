@@ -23,8 +23,8 @@ const subtotal = cartItems.reduce(
  
   return (
     <div className='bg-background'>
-       <div className=" container mx-auto px-4 py-8">
-      <div className="flex items-center mb-8">
+       <div className=" container mx-auto px-4 py-24">
+      <div className="flex items-center mb-4 mt-4">
         <Link
           to="/cart"
           className="text-primary hover:text-primary/80 flex items-center"

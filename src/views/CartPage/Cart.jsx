@@ -25,7 +25,7 @@ function Cart() {
   };
 
   const handleRemoveItem = (id) => {
-    removeFromCart(id); // 👈 directly call context function
+    removeFromCart(id); 
   };
 
   const subtotal = cartItems.reduce((t, i) => t + i.price * i.quantity, 0);
@@ -34,7 +34,7 @@ function Cart() {
   return (
     <div>
       <div className="bg-background min-h-screen">
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-30">
           <h1 className="text-3xl font-bold text-gray-800 mb-8">Your Cart</h1>
           {cartItems.length > 0 ? (
             <div className="flex flex-col lg:flex-row gap-8">

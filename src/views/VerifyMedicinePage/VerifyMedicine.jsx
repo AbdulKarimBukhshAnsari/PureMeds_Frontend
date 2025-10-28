@@ -4,15 +4,17 @@ import ScanQRCode from "./ui/ScanQRCode";
 import UploadQRCode from "./ui/UploadQRCode";
 import VerificationResults from "./ui/VerificationResults";
 import { motion, AnimatePresence } from "framer-motion";
+import Ballpit from "../../components/ui/Animation/Ballpit";
+
 
 // BREAK INTO COMPONENTS - hehe
 const VerifyMedicine = () => {
   const [verificationMethod, setVerificationMethod] = useState(null);
   const [verificationResult, setVerificationResult] = useState(null);
-
+const list = ["#fff", "#156874", "#000" ]
   return (
-    <div className="bg-gray-50 min-h-screen">
-      <div className="container mx-auto px-4 py-12">
+    <div className="bg-background min-h-screen">
+      <div className="container mx-auto px-4 py-32">
         <AnimatePresence mode="wait">
           {!verificationMethod && !verificationResult && (
             <motion.div

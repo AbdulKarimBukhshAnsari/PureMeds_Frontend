@@ -13,7 +13,7 @@ const ProductCard = ({ product, view }) => {
   };
 
   return view == "grid" ? (
-    <div className="bg-background rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
       {/* Product Image */}
       <Link to={`/product/${product.id}`}>
         <img
@@ -36,7 +36,7 @@ const ProductCard = ({ product, view }) => {
         </p>
 
         {/* Purpose */}
-        <p className="text-gray-500 text-sm mb-3 line-clamp-2">
+        <p className="text-gray-500 text-sm mb-3 line-clamp-1">
           {product.purpose}
         </p>
 
@@ -52,7 +52,7 @@ const ProductCard = ({ product, view }) => {
         </p>
 
         {/* Actions */}
-        <div className="flex justify-between items-center gap-2">
+        <div className="flex justify-between items-center gap-2 py-1">
           <Link to={`/product/${product.id}`}>
             <Button
               variant="outline"
@@ -100,7 +100,7 @@ const ProductCard = ({ product, view }) => {
                 {product.manufacturer}
               </p>
 
-              <p className="text-gray-500 text-sm mb-2">{product.purpose}</p>
+              <p className="text-gray-500 text-sm mb-2 line-clamp-1">{product.purpose}</p>
               <div className="mb-3">
                 <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs mr-2">
                   In Stock: {product.availableStock}
@@ -109,7 +109,7 @@ const ProductCard = ({ product, view }) => {
             </div>
             <div className="flex items-center justify-between mt-2">
               <span className="font-bold text-lg">Rs. {product.price}</span>
-              <div className="flex gap-2">
+              <div className="flex gap-2 pb-2">
                 <Link to={`/product/${product.id}`}>
                   <Button
                     variant="outline"

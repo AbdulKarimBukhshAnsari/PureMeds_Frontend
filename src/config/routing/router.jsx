@@ -8,6 +8,7 @@ import VerifyMedicine from '../../views/VerifyMedicinePage/VerifyMedicine'
 import Complaints from '../../views/ComplaintPage/Complaints'
 import Cart from '../../views/CartPage/Cart'
 import Checkout from '../../views/CheckoutPage/Checkout'
+import LoadingPage from '../../components/ui/Animation/LoadingPage'
 
 function AppRouter() {
   return (
@@ -20,6 +21,7 @@ function AppRouter() {
         <Route path='complaint' element={<Complaints/>}/>
         <Route path='cart' element={<Cart/>}/>
         <Route path='checkout' element={<Checkout/>}/>
+        <Route path='animation' element={<LoadingPage/>}/>
         </Route>
     </Routes>
   )

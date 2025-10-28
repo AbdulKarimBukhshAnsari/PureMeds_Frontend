@@ -16,7 +16,7 @@ function CartItemCard ({ item, onRemove, onQuantityChange }) {
           <h3 className="text-gray-800 font-medium">{item.productName}</h3>
           <button
             onClick={() => onRemove(item.id)}
-            className="text-sm text-red-500 hover:text-red-600 flex items-center mt-1"
+            className="text-sm text-red-500 hover:text-red-600 flex items-center mt-1 cursor-pointer"
           >
             <Trash2 className="h-3.5 w-3.5 mr-1" />
             Remove
@@ -28,14 +28,14 @@ function CartItemCard ({ item, onRemove, onQuantityChange }) {
         <div className="flex items-center border border-gray-300 rounded-md">
           <button
             onClick={() => onQuantityChange(item.id, -1)}
-            className="px-2 py-1 text-gray-600 hover:text-gray-800"
+            className="px-2 py-1 text-gray-600 hover:text-gray-800 cursor-pointer"
           >
             <Minus className="h-4 w-4" />
           </button>
           <span className="px-2 py-1 text-gray-800">{item.quantity}</span>
           <button
             onClick={() => onQuantityChange(item.id, 1)}
-            className="px-2 py-1 text-gray-600 hover:text-gray-800"
+            className="px-2 py-1 text-gray-600 hover:text-gray-800 cursor-pointer"
           >
             <Plus className="h-4 w-4" />
           </button>

@@ -7,7 +7,7 @@ function CartEmpty() {
     <div>
        <div className="bg-white rounded-lg shadow-md p-12 text-center">
           <div className="flex justify-center mb-4">
-            <ShoppingBag size={64} className="text-gray-300" />
+            <ShoppingBag size={64} className="text-background " />
           </div>
           <h2 className="text-2xl font-semibold text-support mb-4">
             Your cart is empty

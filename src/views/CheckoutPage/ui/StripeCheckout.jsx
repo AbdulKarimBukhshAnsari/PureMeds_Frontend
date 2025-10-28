@@ -19,7 +19,7 @@ function StripeCheckout({ cartItems }) {
   const options = { fetchClientSecret };
   return (
     <div>
-      <div className="mt-6 bg-gray-50 rounded-lg p-4">
+      <div className="mt-6 bg-white rounded-lg p-4">
       <EmbeddedCheckoutProvider stripe={stripePromise} options={options}>
         <EmbeddedCheckout />
       </EmbeddedCheckoutProvider>

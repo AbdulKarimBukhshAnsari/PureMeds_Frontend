@@ -5,42 +5,59 @@ import { useCart } from "../../../context/Cart/CartContext";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const {cartItems} = useCart()
+  const { cartItems } = useCart();
+
   return (
-    <header className="bg-background shadow-sm sticky top-0 z-10 font-sans">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+    <header
+      className={`
+        fixed top-4 left-1/2 z-50
+        -translate-x-1/2
+        backdrop-blur-md bg-white/40
+        shadow-lg border border-white/20
+        rounded-2xl
+        transition-all duration-300
+        max-w-6xl w-[90%]
+      `}
+    >
+      <div className="px-6 py-4 flex justify-between items-center">
         <Link to={"/"}>
           <span className="text-2xl font-bold text-primary">PureMeds</span>
         </Link>
 
-        <div className="hidden md:flex items-center space-x-8">
-          <Link to={"/"}>
-            <span className="hover:text-primary-hover">Home</span>
+        {/* Desktop Nav */}
+        <div className="hidden md:flex items-center space-x-8 text-primary/90">
+          <Link to={"/"} className="hover:text-primary-hover">
+            Home
           </Link>
-          <Link to={"categories"}>
-            <span className="hover:text-primary-hover">Categories</span>
+          <Link to={"categories"} className="hover:text-primary-hover">
+            Categories
           </Link>
-          <span className="flex items-center gap-1 hover:text-primary-hover">
+          <Link
+            to={"verify"}
+            className="flex items-center gap-1 hover:text-primary-hover"
+          >
             <QrCode size={18} />
-            <Link to={"verify"}>
-              <span>Verify Medicine</span>
-            </Link>
-          </span>
+            <span>Verify Medicine</span>
+          </Link>
         </div>
-        <div className="hidden md:flex items-center space-x-4">
-          <Link to={'/cart'}>
-          <div className="text-text p-1.5 relative text-support hover:text-primary transition-colors">
+
+        {/* Icons */}
+        <div className="hidden md:flex items-center space-x-4 text-primary/90">
+          <Link
+            to={"/cart"}
+            className="relative text-support hover:text-primary transition-colors"
+          >
             <ShoppingCart size={22} />
-             {cartItems.length > 0 && (
+            {cartItems.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-accent text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
                 {cartItems.length}
               </span>
             )}
-          </div>
           </Link>
-
-          <User size={22} />
+          <User size={22} className="hover:text-primary cursor-pointer" />
         </div>
+
+        {/* Mobile Menu Button */}
         <button
           className="md:hidden"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -48,9 +65,10 @@ function Header() {
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
-      {/* Mobile menu */}
+
+      {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white pb-4 px-4">
+        <div className="md:hidden bg-white/60 backdrop-blur-md border-t border-white/30 pb-4 px-4 rounded-b-2xl shadow-md">
           <nav className="flex flex-col space-y-3">
             <Link to="/" className="p-2" onClick={() => setIsMenuOpen(false)}>
               Home
@@ -62,19 +80,21 @@ function Header() {
             >
               Categories
             </Link>
-            <Link to={'/verify'}>
-            <div className="p-2 flex items-center gap-2">
-              <span>Verify Medicine</span>
-            </div>
+            <Link
+              to="/verify"
+              className="p-2 flex items-center gap-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Verify Medicine
             </Link>
-            <Link to={"/cart"}>
-            <div className="p-2 flex items-center gap-2">
-              <span>Cart</span>
-            </div>
+            <Link
+              to="/cart"
+              className="p-2 flex items-center gap-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Cart
             </Link>
-            <div className="p-2 flex items-center gap-2">
-              <span>Profile</span>
-            </div>
+            <div className="p-2 flex items-center gap-2">Profile</div>
           </nav>
         </div>
       )}
