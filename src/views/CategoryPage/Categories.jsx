@@ -170,13 +170,13 @@ const Categories = () => {
           // Grid View
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProducts.map((product) => (
-              <ProductCard key={product._id} product={product} view={"grid"} />
+              <ProductCard key={product.id} product={product} view={"grid"} />
             ))}
           </div>
         ) : (
           <div className="space-y-4">
             {filteredProducts.map((product) => (
-              <ProductCard key={product._id} product={product} view={"list"} />
+              <ProductCard key={product.id} product={product} view={"list"} />
             ))}
           </div>
         )}

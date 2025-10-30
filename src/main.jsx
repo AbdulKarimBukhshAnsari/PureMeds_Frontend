@@ -11,12 +11,15 @@ import "@fontsource/poppins/500.css";
 import "@fontsource/poppins/600.css";
 import { BrowserRouter } from "react-router-dom";
 import { CartProvider } from "./context/Cart/CartContext.jsx";
+import { CheckoutProvider } from "./context/Checkout/CheckoutDetailsContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <CartProvider>
-        <App />
+        <CheckoutProvider>
+          <App />
+        </CheckoutProvider>
       </CartProvider>
     </BrowserRouter>
   </StrictMode>

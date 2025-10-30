@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import InputField from "../../../components/ui/Form/InputField";
 import SelectField from "../../../components/ui/Form/SelectField";
 import Button from "../../../components/ui/Buttons/Button";
-import PaymentSection from "./PaymentSection";
+import { useCheckout } from "../../../context/Checkout/CheckoutDetailsContext";
 
-function CheckoutForm({ cartItems, onSubmitSuccess }) {
+function CheckoutForm({ cartItems, onShowPayment }) {
+  const {setCheckoutDetails} = useCheckout()
   const schema = Yup.object({
     // personal
     firstName: Yup.string().required("First name is required"),
@@ -37,13 +38,14 @@ function CheckoutForm({ cartItems, onSubmitSuccess }) {
   });
 
   const onSubmit = async (data) => {
+     setCheckoutDetails({
+      customerInfo: data,
+    });
     console.log("Order Data:", { ...data, cartItems });
-    await new Promise((r) => setTimeout(r, 1000)); // simulate API
-    reset();
-    onSubmitSuccess();
+    onShowPayment(true)
   };
   return (
-    <div onSubmit={handleSubmit(onSubmit)} className="lg:col-span-2 space-y-8">
+    <form onSubmit={handleSubmit(onSubmit)} className="lg:col-span-2 space-y-8">
       {/* PERSONAL INFORMATION */}
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-xl font-medium text-[#156874] mb-4">
@@ -134,13 +136,6 @@ function CheckoutForm({ cartItems, onSubmitSuccess }) {
           />
         </div>
       </div>
-      {/* Payment Method */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-medium text-primary mb-4">
-          Payment Method
-        </h2>
-        <PaymentSection cartItems={cartItems} />
-      </div>
       {/* SUBMIT */}
       <Button
         variant="primary"
@@ -148,9 +143,9 @@ function CheckoutForm({ cartItems, onSubmitSuccess }) {
         className="w-full"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "Processing..." : "Place Order"}
+        {isSubmitting ? "Processing..." : "Proceed to Payment"}
       </Button>
-    </div>
+    </form>
   );
 }
 

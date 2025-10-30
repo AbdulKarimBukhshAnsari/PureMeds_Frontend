@@ -4,7 +4,6 @@ import ScanQRCode from "./ui/ScanQRCode";
 import UploadQRCode from "./ui/UploadQRCode";
 import VerificationResults from "./ui/VerificationResults";
 import { motion, AnimatePresence } from "framer-motion";
-import Ballpit from "../../components/ui/Animation/Ballpit";
 
 
 // BREAK INTO COMPONENTS - hehe

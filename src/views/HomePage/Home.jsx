@@ -5,8 +5,7 @@ import bgImage from "../../assets/bg8.png";
 import { Link } from "react-router-dom";
 import { products } from "../../utils/mockData";
 import ProductCard from "../../components/ui/ProductCard/ProductCard";
-import { motion, AnimatePresence } from "framer-motion";
-import { AnimatedBackground } from "../../components/ui/Animation/AnimatedBg.idea";
+import { motion } from "framer-motion";
 import {
   FadeInWhenVisible,
   ScaleInWhenVisible,

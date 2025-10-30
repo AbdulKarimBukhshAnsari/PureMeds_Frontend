@@ -4,6 +4,7 @@ const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  
 
   const addToCart = (product, quantity = 1) => {
     setCartItems((prev) => {
@@ -31,6 +32,14 @@ export const CartProvider = ({ children }) => {
     );
   };
 
+   const getCartItems = (cartItems) => { // a method for seperating only the name, quantity and price from the cart - used in payment gateway
+    return cartItems.map((item) => ({
+      name: item.productName,
+      price: item.price,
+      quantity: item.quantity,
+    }));
+  };
+
   const clearCart = () => setCartItems([]);
 
   return (
@@ -41,6 +50,7 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         updateQuantity,
         clearCart,
+        getCartItems,
       }}
     >
       {children}
