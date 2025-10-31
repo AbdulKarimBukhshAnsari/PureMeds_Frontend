@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "../../views/HomePage/Home";
 import Categories from "../../views/CategoryPage/Categories";
 import Layout from "../../Layout";
@@ -9,7 +9,9 @@ import Complaints from "../../views/ComplaintPage/Complaints";
 import Cart from "../../views/CartPage/Cart";
 import Checkout from "../../views/CheckoutPage/Checkout";
 import CheckoutReturn from "../../views/CheckoutPage/ui/CheckoutReturn";
-import PaymentSection from "../../views/CheckoutPage/ui/PaymentSection";
+import CustomerDashboard from "../../views/CustomerDashboard/CustomerDashboard";
+import Orders from "../../views/CustomerDashboard/ui/Orders";
+import UserComplaints from "../../views/CustomerDashboard/ui/UserComplaints";
 
 function AppRouter() {
   return (
@@ -23,6 +25,11 @@ function AppRouter() {
         <Route path="cart" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="checkout/return" element={<CheckoutReturn />} />
+        <Route path="/dashboard" element={<CustomerDashboard />}>
+          <Route index element={<Navigate to="orders" replace />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="user-complaints" element={<UserComplaints />} />
+        </Route>
       </Route>
     </Routes>
   );

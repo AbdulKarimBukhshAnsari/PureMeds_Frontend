@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Search, Grid, List as ListIcon } from "lucide-react";
-import {ChevronLeft, ChevronRight} from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import ProductCard from "../../components/ui/ProductCard/ProductCard";
 import Button from "../../components/ui/Buttons/Button";
 import { products } from "../../utils/mockData";
@@ -66,10 +66,12 @@ const Categories = () => {
       : products.filter((p) => p.category === activeCategory);
 
   return (
-    <div className="bg-[#deefec]">
+    <div className="bg-background">
       <div className="container mx-auto px-2 py-30">
         <FadeInLeft>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Medicine Categories</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">
+            Medicine Categories
+          </h1>
           <p className="text-gray-600 mb-6">
             Browse our wide range of verified medicines
           </p>

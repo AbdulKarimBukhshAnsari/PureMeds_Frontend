@@ -52,9 +52,9 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="bg-background">
+    <div className="bg-background min-h-screen">
       <div className="container mx-auto px-4 pt-24">
-        <div className="flex items-center justify-between py-5">
+        <div className="flex items-center justify-between py-5 w-full">
           <FadeInLeft>
             <h1 className="text-3xl font-bold text-gray-800">
               Product Details

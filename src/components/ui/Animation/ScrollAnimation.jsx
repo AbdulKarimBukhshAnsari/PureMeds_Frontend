@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
 // Fade in from bottom animation component
-export const FadeInWhenVisible = ({ children, delay = 0, duration = 0.6 }) => {
+export const FadeInWhenVisible = ({ children, delay = 0, duration = 0.8 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -19,7 +19,7 @@ export const FadeInWhenVisible = ({ children, delay = 0, duration = 0.6 }) => {
 };
 
 // Fade in from left animation component
-export const FadeInLeft = ({ children, delay = 0, duration = 0.6 }) => {
+export const FadeInLeft = ({ children, delay = 0, duration = 0.8 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -36,16 +36,17 @@ export const FadeInLeft = ({ children, delay = 0, duration = 0.6 }) => {
 };
 
 // Fade in from right animation component
-export const FadeInRight = ({ children, delay = 0, duration = 0.6 }) => {
+export const FadeInRight = ({ children, delay = 0, duration = 0.8 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "100px" });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, x: 50 }}
-      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+      initial={{ opacity: 0, x: 20 }}
+      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
       transition={{ duration, delay, ease: "easeOut" }}
+      style={{ overflow: "visible" }}
     >
       {children}
     </motion.div>
@@ -53,7 +54,7 @@ export const FadeInRight = ({ children, delay = 0, duration = 0.6 }) => {
 };
 
 // Scale up animation component
-export const ScaleInWhenVisible = ({ children, delay = 0, duration = 0.6 }) => {
+export const ScaleInWhenVisible = ({ children, delay = 0, duration = 0.8 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -82,9 +83,9 @@ export const StaggerContainer = ({ children, staggerDelay = 0.1 }) => {
       variants={{
         visible: {
           transition: {
-            staggerChildren: staggerDelay
-          }
-        }
+            staggerChildren: staggerDelay,
+          },
+        },
       }}
     >
       {children}
@@ -93,12 +94,12 @@ export const StaggerContainer = ({ children, staggerDelay = 0.1 }) => {
 };
 
 // Child item for staggered animations
-export const StaggerItem = ({ children, duration = 0.6 }) => {
+export const StaggerItem = ({ children, duration = 0.8 }) => {
   return (
     <motion.div
       variants={{
         hidden: { opacity: 0, y: 30 },
-        visible: { opacity: 1, y: 0 }
+        visible: { opacity: 1, y: 0 },
       }}
       transition={{ duration, ease: "easeOut" }}
     >

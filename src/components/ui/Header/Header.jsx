@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { useCart } from "../../../context/Cart/CartContext";
 
 function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // Mobile menu
+  const [profileOpen, setProfileOpen] = useState(false); // Profile dropdown
   const { cartItems } = useCart();
 
   return (
@@ -20,6 +21,7 @@ function Header() {
       `}
     >
       <div className="px-6 py-4 flex justify-between items-center">
+        {/* Logo */}
         <Link to={"/"}>
           <span className="text-2xl font-bold text-primary">PureMeds</span>
         </Link>
@@ -41,8 +43,9 @@ function Header() {
           </Link>
         </div>
 
-        {/* Icons */}
-        <div className="hidden md:flex items-center space-x-4 text-primary/90">
+        {/* Icons (Desktop) */}
+        <div className="hidden md:flex items-center space-x-4 text-primary/90 relative">
+          {/* Cart Icon */}
           <Link
             to={"/cart"}
             className="relative text-support hover:text-primary transition-colors"
@@ -54,7 +57,44 @@ function Header() {
               </span>
             )}
           </Link>
-          <User size={22} className="hover:text-primary cursor-pointer" />
+
+          {/* Profile Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setProfileOpen(!profileOpen)}
+              className="hover:text-primary transition-colors"
+            >
+              <User size={22} />
+            </button>
+
+            {profileOpen && (
+              <div
+                className="absolute right-0 mt-3 w-44 bg-white/90 backdrop-blur-md border border-white/20 rounded-lg shadow-lg overflow-hidden z-50"
+                onMouseLeave={() => setProfileOpen(false)}
+              >
+                <Link
+                  to="/dashboard"
+                  className="block px-4 py-2 text-sm hover:bg-primary/10 transition-colors"
+                  onClick={() => setProfileOpen(false)}
+                >
+                  Orders
+                </Link>
+                <Link
+                  to="/dashboard/user-complaints"
+                  className="block px-4 py-2 text-sm hover:bg-primary/10 cursor-pointer transition-colors"
+                  onClick={() => setProfileOpen(false)}
+                >
+                  Complaints
+                </Link>
+                <div
+                  className="block px-4 py-2 text-sm hover:bg-primary/10 cursor-pointer transition-colors"
+                  onClick={() => setProfileOpen(false)}
+                >
+                  Profile
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Mobile Menu Button */}
@@ -94,7 +134,13 @@ function Header() {
             >
               Cart
             </Link>
-            <div className="p-2 flex items-center gap-2">Profile</div>
+            <Link
+              to="/dashboard"
+              className="p-2 flex items-center gap-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Profile
+            </Link>
           </nav>
         </div>
       )}
