@@ -13,7 +13,7 @@ const ProductCard = ({ product, view }) => {
   };
 
   return view == "grid" ? (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-[#156874]/10">
       {/* Product Image */}
       <Link to={`/product/${product.id}`}>
         <img
@@ -23,10 +23,10 @@ const ProductCard = ({ product, view }) => {
         />
       </Link>
 
-      <div className="p-4">
+      <div className="p-5">
         {/* Product Name */}
         <Link to={`/product/${product.id}`}>
-          <h3 className="font-semibold text-lg mb-1 text-[#2E2E2E] hover:text-primary-hover">
+          <h3 className="font-bold text-lg mb-2 text-gray-800 hover:text-[#156874] transition-colors">
             {product.productName}
           </h3>
         </Link>
@@ -36,28 +36,38 @@ const ProductCard = ({ product, view }) => {
         </p>
 
         {/* Purpose */}
-        <p className="text-gray-500 text-sm mb-3 line-clamp-1">
+        <p className="text-gray-500 text-sm mb-4 line-clamp-2 min-h-[2.5rem]">
           {product.purpose}
         </p>
 
-        {/* Price, Stock, Category */}
-        <div className="flex items-center justify-between mb-3">
-          <span className="font-bold text-lg">Rs. {product.price}</span>
-          <span className="text-sm text-green-500">
-            Stock: {product.availableStock}
+        {/* Category Badge */}
+        <div className="mb-4">
+          <span className="inline-block bg-[#156874]/10 text-[#156874] px-3 py-1 rounded-full text-xs font-medium capitalize">
+            {product.category}
           </span>
         </div>
-        <p className="text-xs text-gray-500 mb-3">
-          Category: <span className="capitalize">{product.category}</span>
-        </p>
+
+        {/* Price, Stock */}
+        <div className="flex items-center justify-between mb-4 pb-4 border-b border-[#156874]/10">
+          <span className="text-2xl font-bold text-[#156874]">Rs. {product.price}</span>
+          <span className={`text-sm font-medium ${
+            product.availableStock > 10 
+              ? "text-green-600" 
+              : product.availableStock > 0 
+              ? "text-orange-600" 
+              : "text-red-600"
+          }`}>
+            {product.availableStock > 0 ? `${product.availableStock} in stock` : "Out of stock"}
+          </span>
+        </div>
 
         {/* Actions */}
-        <div className="flex justify-between items-center gap-2 py-1">
-          <Link to={`/product/${product.id}`}>
+        <div className="flex gap-3">
+          <Link to={`/product/${product.id}`} className="flex-1">
             <Button
               variant="outline"
               size="sm"
-              className="flex-1 cursor-pointer"
+              className="w-full border-[#156874] text-[#156874] hover:bg-[#156874] hover:text-white transition-all duration-200 rounded-lg"
             >
               View Details
             </Button>
@@ -65,8 +75,9 @@ const ProductCard = ({ product, view }) => {
           <Button
             variant="accent"
             size="sm"
-            className="flex items-center justify-center gap-1"
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#156874] to-[#0d4a52] hover:from-[#0d4a52] hover:to-[#156874] text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg"
             onClick={handleAddToCart}
+            disabled={product.availableStock === 0}
           >
             <ShoppingCart size={16} />
             <span>Add</span>

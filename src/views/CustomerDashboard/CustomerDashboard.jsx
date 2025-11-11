@@ -7,6 +7,7 @@ import {
   LogOut,
   ChevronRight,
 } from "lucide-react";
+import { SignOutButton } from "@clerk/clerk-react";
 
 function CustomerDashboard() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -25,7 +26,7 @@ function CustomerDashboard() {
       icon: <AlertTriangle className="h-5 w-5" />,
     },
     {
-      path: "/dashboard", //currently redirects to orders
+      path: "/dashboard/user-profile", //currently redirects to orders
       label: "Profile",
       icon: <User className="h-5 w-5" />,
     },
@@ -92,16 +93,18 @@ function CustomerDashboard() {
                   {/* it will be in clerk so maybe can be removed */}
                   {/* Logout button — should be handled by Clerk*/}
                   <li className="pt-4 mt-4 border-t border-gray-200">
-                    <button
-                      className="flex items-center px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors w-full text-left"
-                      onClick={() => {
-                        // Temporary: You’ll replace this with Clerk signOut()
-                        console.log("Logging out...");
-                      }}
-                    >
-                      <LogOut className="h-5 w-5 text-primary/60 mr-3" />
-                      Logout
-                    </button>
+                    <SignOutButton>
+                      <button
+                        className="flex items-center px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors w-full text-left"
+                        onClick={() => {
+                          // Temporary: You’ll replace this with Clerk signOut()
+                          console.log("Logging out...");
+                        }}
+                      >
+                        <LogOut className="h-5 w-5 text-primary/60 mr-3" />
+                        Logout
+                      </button>
+                    </SignOutButton>
                   </li>
                 </ul>
               </nav>

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Button from "../../../components/ui/Buttons/Button";
 import { Html5Qrcode } from "html5-qrcode";
 import { SupplyChain } from "../../../utils/mockData";
+import { ArrowLeft } from "lucide-react";
 
 function ScanQRCode({ onVerified, onFake, onBack }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -93,9 +94,20 @@ function ScanQRCode({ onVerified, onFake, onBack }) {
   }, []);
 
   return (
-    <div>
-      <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-sm">
-        <div className="text-center">
+    <div className="max-w-lg mx-auto mb-10">
+      {/* Card Container */}
+      <div className="bg-white p-8 rounded-lg shadow-sm relative">
+        {/* Back Button (inside card, top-left) */}
+        <button
+          onClick={onBack}
+          className="absolute top-4 left-4 flex items-center text-gray-600 hover:text-primary transition"
+          aria-label="Go back"
+        >
+          <ArrowLeft className="h-5 w-5 mr-1" />
+          <span className="text-sm font-medium">Back</span>
+        </button>
+
+        <div className="text-center mt-6">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">
             Scan QR Code
           </h2>
@@ -103,6 +115,7 @@ function ScanQRCode({ onVerified, onFake, onBack }) {
             Position the QR code within the camera frame.
           </p>
 
+          {/* QR Scanner Box */}
           <div className="relative w-full aspect-square max-w-xs mx-auto mb-8 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden">
             {isLoading ? (
               <div className="flex flex-col items-center">
@@ -113,9 +126,6 @@ function ScanQRCode({ onVerified, onFake, onBack }) {
               <div id="reader" ref={readerRef} style={{ width: "100%" }} />
             )}
           </div>
-          <Button onClick={onBack} className="mt-4" variant="secondary">
-            Go Back
-          </Button>
         </div>
       </div>
     </div>

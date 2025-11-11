@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Html5Qrcode } from "html5-qrcode";
 import Button from "../../../components/ui/Buttons/Button";
-import { Upload } from "lucide-react";
+import { ArrowLeft, Upload } from "lucide-react";
 import { SupplyChain } from "../../../utils/mockData";
 
 function UploadQRCode({ onFake, onVerified, onBack }) {
@@ -61,76 +61,82 @@ function UploadQRCode({ onFake, onVerified, onBack }) {
   };
 
   return (
-    <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-sm">
-      <div className="text-center">
+    <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-sm relative">
+      {/* Back Button (inside card, top-left) */}
+      <button
+        onClick={onBack}
+        className="absolute top-4 left-4 flex items-center text-gray-600 hover:text-primary transition"
+        aria-label="Go back"
+      >
+        <ArrowLeft className="h-5 w-5 mr-1" />
+        <span className="text-sm font-medium">Back</span>
+      </button>
+
+      {/* Header Section */}
+      <div className="text-center mt-4">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">
           Upload QR Code
         </h2>
         <p className="text-gray-600 mb-6">
           Select an image of the QR code from your device.
         </p>
+      </div>
 
-        {/* Upload Box */}
-        <div
-          className="w-full aspect-square max-w-xs mx-auto mb-8 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-[#156874] transition-colors"
-          onClick={openFilePicker}
-        >
-          {isLoading ? (
-            <div className="flex flex-col items-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-              <p className="mt-4 text-gray-500">Processing...</p>
-            </div>
-          ) : preview ? (
-            <div className="flex flex-col items-center">
-              <img
-                src={preview}
-                alt="preview"
-                className="w-64 aspect-square object-contain rounded-md mb-3"
-              />
-            </div>
-          ) : (
-            <>
-              <Upload className="h-16 w-16 text-primary mb-4" />
-              <p className="text-sm text-gray-500">Click to upload QR code</p>
-              <p className="text-xs text-gray-400 mt-1">PNG, JPG or JPEG</p>
-            </>
-          )}
-        </div>
-
-        {preview && (
+      {/* Upload Box */}
+      <div
+        className="w-full aspect-square max-w-xs mx-auto mb-8 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-[#156874] transition-colors"
+        onClick={openFilePicker}
+      >
+        {isLoading ? (
+          <div className="flex flex-col items-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            <p className="mt-4 text-gray-500">Processing...</p>
+          </div>
+        ) : preview ? (
+          <div className="flex flex-col items-center">
+            <img
+              src={preview}
+              alt="preview"
+              className="w-64 aspect-square object-contain rounded-md mb-3"
+            />
+          </div>
+        ) : (
           <>
-          <div className="flex justify-center space-x-3 mt-4">
-            <Button variant="outline" size="sm" onClick={openFilePicker}>
-              Change Image
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={verifyQRCode}
-              disabled={isLoading}
-              >
-              {isLoading ? "Verifying..." : "Verify QR Code"}
-            </Button>
-              </div>
+            <Upload className="h-16 w-16 text-primary mb-4" />
+            <p className="text-sm text-gray-500">Click to upload QR code</p>
+            <p className="text-xs text-gray-400 mt-1">PNG, JPG or JPEG</p>
           </>
         )}
-
-        {/* Hidden input for file selection */}
-        <input
-          type="file"
-          ref={fileRef}
-          className="hidden"
-          accept="image/*"
-          onChange={onFileChange}
-          disabled={isLoading}
-        />
-        <Button onClick={onBack} className="mt-4" variant="secondary">
-          Go Back
-        </Button>
-
-        {/* Temporary container for html5-qrcode (kept hidden) */}
-        <div id="qr-reader-file" className="hidden" />
       </div>
+
+      {preview && (
+        <div className="flex justify-center space-x-3 mt-4">
+          <Button variant="outline" size="sm" onClick={openFilePicker}>
+            Change Image
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={verifyQRCode}
+            disabled={isLoading}
+          >
+            {isLoading ? "Verifying..." : "Verify QR Code"}
+          </Button>
+        </div>
+      )}
+
+      {/* Hidden input for file selection */}
+      <input
+        type="file"
+        ref={fileRef}
+        className="hidden"
+        accept="image/*"
+        onChange={onFileChange}
+        disabled={isLoading}
+      />
+
+      {/* Hidden QR Reader Container */}
+      <div id="qr-reader-file" className="hidden" />
     </div>
   );
 }

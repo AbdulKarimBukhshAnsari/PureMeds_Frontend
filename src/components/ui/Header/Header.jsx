@@ -1,12 +1,14 @@
-import { Menu, QrCode, ShoppingCart, User, X } from "lucide-react";
+import { LogIn, Menu, QrCode, ShoppingCart, User, X } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../../../context/Cart/CartContext";
+import { useAuth } from "@clerk/clerk-react";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Mobile menu
   const [profileOpen, setProfileOpen] = useState(false); // Profile dropdown
   const { cartItems } = useCart();
+  const {isSignedIn} = useAuth()
 
   return (
     <header
@@ -14,7 +16,7 @@ function Header() {
         fixed top-4 left-1/2 z-50
         -translate-x-1/2
         backdrop-blur-md bg-white/40
-        shadow-lg border border-white/20
+        shadow-lg border border-primary/20
         rounded-2xl
         transition-all duration-300
         max-w-6xl w-[90%]
@@ -60,14 +62,20 @@ function Header() {
 
           {/* Profile Dropdown */}
           <div className="relative">
+
             <button
               onClick={() => setProfileOpen(!profileOpen)}
               className="hover:text-primary transition-colors"
             >
-              <User size={22} />
+              {isSignedIn ? 
+              <User size={22} className="mt-1" /> : 
+              <Link to={'/sign-in'}>
+              <LogIn size={22} className="mt-1"/> 
+              </Link>}
+              
             </button>
 
-            {profileOpen && (
+            {profileOpen && isSignedIn && (
               <div
                 className="absolute right-0 mt-3 w-44 bg-white/90 backdrop-blur-md border border-white/20 rounded-lg shadow-lg overflow-hidden z-50"
                 onMouseLeave={() => setProfileOpen(false)}
@@ -86,12 +94,14 @@ function Header() {
                 >
                   Complaints
                 </Link>
+                <Link to={"/dashboard/user-profile"}>
                 <div
                   className="block px-4 py-2 text-sm hover:bg-primary/10 cursor-pointer transition-colors"
                   onClick={() => setProfileOpen(false)}
-                >
+                  >
                   Profile
                 </div>
+                  </Link>
               </div>
             )}
           </div>
@@ -108,7 +118,7 @@ function Header() {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white/60 backdrop-blur-md border-t border-white/30 pb-4 px-4 rounded-b-2xl shadow-md">
+        <div className="md:hidden bg-white/95 backdrop-blur-lg border-t border-[#156874]/20 pb-4 px-4 rounded-b-2xl shadow-md">
           <nav className="flex flex-col space-y-3">
             <Link to="/" className="p-2" onClick={() => setIsMenuOpen(false)}>
               Home
