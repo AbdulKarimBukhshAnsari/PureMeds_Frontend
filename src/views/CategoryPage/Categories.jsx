@@ -2,20 +2,49 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Search, Grid, List as ListIcon } from "lucide-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useAuth } from "@clerk/clerk-react";
 import ProductCard from "../../components/ui/ProductCard/ProductCard";
 import Button from "../../components/ui/Buttons/Button";
-import { products } from "../../utils/mockData";
+import { useFetchProduct } from "../../hooks/useFetchProduct";
 import {
   FadeInLeft,
   ScaleInWhenVisible,
 } from "../../components/ui/Animation/ScrollAnimation";
 
 const Categories = () => {
+  const { getToken } = useAuth();
+  const [token, setToken] = useState(null);
   const [activeCategory, setActiveCategory] = useState("all");
   const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'list'
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
   const [scrollPosition, setScrollPosition] = useState(0);
   const scrollRef = useRef(null);
+
+  // Get authentication token (optional)
+  useEffect(() => {
+    const fetchToken = async () => {
+      try {
+        const authToken = await getToken({ template: "puremeds" });
+        setToken(authToken);
+      } catch (error) {
+        // User not authenticated, continue without token
+        console.log("User not authenticated, continuing without token");
+        setToken(null);
+      }
+    };
+    fetchToken();
+  }, [getToken]);
+
+  // Debounce search query
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 500); // 500ms debounce delay
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   const scrollAmount = 250; // adjust for how far each click scrolls
 
@@ -59,11 +88,21 @@ const Categories = () => {
     { id: "vitamins-others", name: "Vitamins & Others" },
   ];
 
-  // Filter products by category
-  const filteredProducts =
-    activeCategory === "all"
-      ? products
-      : products.filter((p) => p.category === activeCategory);
+  // Fetch products using the hook (works without token)
+  const { products, loading, error } = useFetchProduct({
+    category: activeCategory === "all" ? "" : activeCategory,
+    search: debouncedSearch,
+    page: 1,
+    limit: 50, // Show more products per page
+    token,
+    autoFetch: true, // Always fetch, token is optional
+  });
+
+  // Transform products to match ProductCard expected format (convert _id to id)
+  const transformedProducts = products.map((product) => ({
+    ...product,
+    id: product._id || product.id,
+  }));
 
   return (
     <div className="bg-background">
@@ -131,6 +170,8 @@ const Categories = () => {
               <input
                 type="text"
                 placeholder="Search medicines..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
               />
             </div>
@@ -166,21 +207,46 @@ const Categories = () => {
         <FadeInLeft>
           <h2 className="text-xl font-semibold mb-4">
             {categories.find((c) => c.id === activeCategory)?.name}
+            {debouncedSearch && ` - Search: "${debouncedSearch}"`}
           </h2>
         </FadeInLeft>
-        {viewMode === "grid" ? (
-          // Grid View
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} view={"grid"} />
-            ))}
+
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center py-12">
+            <p className="text-gray-600">Loading products...</p>
           </div>
-        ) : (
-          <div className="space-y-4">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} view={"list"} />
-            ))}
+        )}
+
+        {/* Error State */}
+        {error && !loading && (
+          <div className="text-center py-12">
+            <p className="text-red-600">Error: {error}</p>
           </div>
+        )}
+
+        {/* Products Display */}
+        {!loading && !error && (
+          <>
+            {transformedProducts.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-gray-600">No products found.</p>
+              </div>
+            ) : viewMode === "grid" ? (
+              // Grid View
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {transformedProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} view={"grid"} />
+                ))}
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {transformedProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} view={"list"} />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import Button from "../Buttons/Button";
 import { useCart } from "../../../context/Cart/CartContext";
+import { getCategoryName } from "../../../utils/categoryMapping";
 
 const ProductCard = ({ product, view }) => {
   const [quantity, setQuantity] = useState(1); // by default add one medicine, and they can add or subtract in the product details page
@@ -43,7 +44,7 @@ const ProductCard = ({ product, view }) => {
         {/* Category Badge */}
         <div className="mb-4">
           <span className="inline-block bg-[#156874]/10 text-[#156874] px-3 py-1 rounded-full text-xs font-medium capitalize">
-            {product.category}
+            {getCategoryName(product.category)}
           </span>
         </div>
 
