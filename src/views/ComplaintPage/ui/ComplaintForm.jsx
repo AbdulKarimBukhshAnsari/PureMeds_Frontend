@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
+import { useAuth } from "@clerk/clerk-react";
 import InputField from "../../../components/ui/Form/InputField";
 import SelectField from "../../../components/ui/Form/SelectField";
 import SuccessMessage from "./SuccessMessage";
 import FileUpload from "./FileUpload";
+import { createComplaint } from "../../../apis/complaint.api";
 
 const schema = Yup.object({
   medicineName: Yup.string().required("Medicine name is required"),
@@ -16,10 +18,13 @@ const schema = Yup.object({
   medicineDose: Yup.string().required("Medicine dose is required"),
   store: Yup.string().required("Store name is required"),
   city: Yup.string().required("City is required"),
-  qrCode: Yup.string().required("QR Code is required"),
+  qrCode: Yup.mixed().required("QR Code is required"),
+  description: Yup.string().required("Description is required"),
 });
 function ComplaintForm() {
+  const { getToken } = useAuth();
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(null);
   const {
     register,
     handleSubmit,
@@ -31,10 +36,36 @@ function ComplaintForm() {
   });
 
   const onSubmit = async (data) => {
-    console.log("Complaint Data:", data);
-    await new Promise((r) => setTimeout(r, 1200)); // Simulate API call
-    setSubmitted(true);
-    reset();
+    try {
+      setError(null);
+      const token = await getToken({ template: "puremeds" });
+      if (!token) {
+        throw new Error("Authentication required");
+      }
+
+      // Create FormData for file upload
+      const formData = new FormData();
+      formData.append("medicineName", data.medicineName);
+      formData.append("medicineDose", data.medicineDose);
+      formData.append("manufacturer", data.manufacturer);
+      formData.append("batchId", data.batchId);
+      formData.append("manufacturerDate", data.manufacturerDate);
+      formData.append("expiryDate", data.expiryDate);
+      formData.append("store", data.store);
+      formData.append("city", data.city);
+      formData.append("description", data.description);
+      
+      if (data.qrCode) {
+        formData.append("qrCode", data.qrCode);
+      }
+
+      await createComplaint(formData, token);
+      setSubmitted(true);
+      reset();
+    } catch (err) {
+      console.error("Error submitting complaint:", err);
+      setError(err?.response?.data?.message || "Failed to submit complaint. Please try again.");
+    }
   };
 
   if (submitted) return <SuccessMessage onReset={() => setSubmitted(false)} />;
@@ -117,11 +148,27 @@ function ComplaintForm() {
         />
       </div>
 
+      <div className="mb-6">
+        <InputField
+          label="Description"
+          name="description"
+          register={register}
+          error={errors.description}
+          placeholder="Describe the issue with the medicine..."
+          type="textarea"
+        />
+      </div>
+
       <Controller
         name="qrCode"
         control={control}
         render={({ field }) => <FileUpload onFileSelect={field.onChange} error={errors.qrCode} />}
       />
+      {error && (
+        <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-red-600 text-sm">{error}</p>
+        </div>
+      )}
       <div className="flex justify-end mt-8">
         <button
           type="submit"
