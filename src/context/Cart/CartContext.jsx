@@ -1,13 +1,32 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const CartContext = createContext();
 
+const CART_STORAGE_KEY = "puremeds_cart_items";
+
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
-  
+  // Load from sessionStorage on mount
+  const [cartItems, setCartItemsState] = useState(() => {
+    try {
+      const stored = sessionStorage.getItem(CART_STORAGE_KEY);
+      return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+      console.error("Error loading cart from storage:", error);
+      return [];
+    }
+  });
+
+  // Save to sessionStorage whenever cartItems changes
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+    } catch (error) {
+      console.error("Error saving cart to storage:", error);
+    }
+  }, [cartItems]);
 
   const addToCart = (product, quantity = 1) => {
-    setCartItems((prev) => {
+    setCartItemsState((prev) => {
       const existing = prev.find((item) => item.id === product.id);
       if (existing) {
         return prev.map((item) =>
@@ -21,11 +40,14 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (id) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+    setCartItemsState((prev) => {
+      const updated = prev.filter((item) => item.id !== id);
+      return updated;
+    });
   };
 
   const updateQuantity = (id, quantity) => {
-    setCartItems((prev) =>
+    setCartItemsState((prev) =>
       prev.map((item) =>
         item.id === id ? { ...item, quantity: Math.max(1, quantity) } : item
       )
@@ -40,7 +62,10 @@ export const CartProvider = ({ children }) => {
     }));
   };
 
-  const clearCart = () => setCartItems([]);
+  const clearCart = () => {
+    setCartItemsState([]);
+    sessionStorage.removeItem(CART_STORAGE_KEY);
+  };
 
   return (
     <CartContext.Provider
