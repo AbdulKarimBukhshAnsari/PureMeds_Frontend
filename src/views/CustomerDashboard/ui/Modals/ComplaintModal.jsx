@@ -109,14 +109,14 @@ export default function ComplaintModal({ complaint, isOpen, onClose }) {
                   <Calendar size={14} className="text-primary mt-0.5" />
                   <div>
                     <p className="text-gray-500 text-xs">Manufacturing Date</p>
-                    <p className="font-medium text-sm">{complaint.manufacturerDate}</p>
+                    <p className="font-medium text-sm">{complaint.manufacturerDate ? new Date(complaint.manufacturerDate).toLocaleDateString("en-GB").replace(/\//g, "-")  : "Not set"}</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-2">
                   <Calendar size={14} className="text-primary mt-0.5" />
                   <div>
                     <p className="text-gray-500 text-xs">Expiry Date</p>
-                    <p className="font-medium text-sm">{complaint.expiryDate}</p>
+                    <p className="font-medium text-sm">{complaint.expiryDate ? new Date(complaint.expiryDate).toLocaleDateString("en-GB").replace(/\//g, "-") : "Not set"}</p>
                   </div>
                 </div>
               </div>

@@ -4,13 +4,33 @@ import { ShoppingCart } from "lucide-react";
 import Button from "../Buttons/Button";
 import { useCart } from "../../../context/Cart/CartContext";
 import { getCategoryName } from "../../../utils/categoryMapping";
+import { useToast } from "../../../hooks/Toast/useToast";
+import ToastNotification from "../../../components/ui/Alert/ToastNotification";
 
 const ProductCard = ({ product, view }) => {
   const [quantity, setQuantity] = useState(1); // by default add one medicine, and they can add or subtract in the product details page
   const { addToCart } = useCart();
+  const [toast, showSuccess, showError, hideToast] = useToast();
 
   const handleAddToCart = () => {
-    addToCart(product, quantity);
+    try {
+      if (product.availableStock === 0) {
+        showError(`Sorry, ${product.productName} is out of stock!`);
+        return;
+      }
+
+      addToCart(product, quantity);
+      showSuccess(
+        `${quantity} ${
+          quantity > 1 ? "items" : "item"
+        } added to your cart successfully!`
+      );
+    } catch (error) {
+      console.error("Add to cart error:", error);
+      showError(
+        `Failed to add ${product.productName} to cart. Please try again.`
+      );
+    }
   };
 
   return view == "grid" ? (
@@ -27,7 +47,7 @@ const ProductCard = ({ product, view }) => {
       <div className="p-5">
         {/* Product Name */}
         <Link to={`/product/${product.id}`}>
-          <h3 className="font-bold text-lg mb-2 text-gray-800 hover:text-[#156874] transition-colors">
+          <h3 className="font-bold text-lg mb-2 text-gray-800 hover:text-[#156874] transition-colors line-clamp-1 ">
             {product.productName}
           </h3>
         </Link>
@@ -50,15 +70,21 @@ const ProductCard = ({ product, view }) => {
 
         {/* Price, Stock */}
         <div className="flex items-center justify-between mb-4 pb-4 border-b border-[#156874]/10">
-          <span className="text-2xl font-bold text-[#156874]">Rs. {product.price}</span>
-          <span className={`text-sm font-medium ${
-            product.availableStock > 10 
-              ? "text-green-600" 
-              : product.availableStock > 0 
-              ? "text-orange-600" 
-              : "text-red-600"
-          }`}>
-            {product.availableStock > 0 ? `${product.availableStock} in stock` : "Out of stock"}
+          <span className="text-2xl font-bold text-[#156874]">
+            Rs. {product.price}
+          </span>
+          <span
+            className={`text-sm font-medium ${
+              product.availableStock > 10
+                ? "text-green-600"
+                : product.availableStock > 0
+                ? "text-orange-600"
+                : "text-red-600"
+            }`}
+          >
+            {product.availableStock > 0
+              ? `${product.availableStock} in stock`
+              : "Out of stock"}
           </span>
         </div>
 
@@ -68,7 +94,7 @@ const ProductCard = ({ product, view }) => {
             <Button
               variant="outline"
               size="sm"
-              className="w-full border-[#156874] text-[#156874] hover:bg-[#156874] hover:text-white transition-all duration-200 rounded-lg"
+              className="w-full cursour-pointer rounded-lg"
             >
               View Details
             </Button>
@@ -78,13 +104,20 @@ const ProductCard = ({ product, view }) => {
             size="sm"
             className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#156874] to-[#0d4a52] hover:from-[#0d4a52] hover:to-[#156874] text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg"
             onClick={handleAddToCart}
-            disabled={product.availableStock === 0}
+            // disabled={product.availableStock === 0}
           >
             <ShoppingCart size={16} />
             <span>Add</span>
           </Button>
         </div>
       </div>
+      <ToastNotification
+        isVisible={toast.isVisible}
+        type={toast.type}
+        message={toast.message}
+        duration={toast.duration}
+        onClose={hideToast}
+      />
     </div>
   ) : (
     <div>
@@ -112,7 +145,9 @@ const ProductCard = ({ product, view }) => {
                 {product.manufacturer}
               </p>
 
-              <p className="text-gray-500 text-sm mb-2 line-clamp-1">{product.purpose}</p>
+              <p className="text-gray-500 text-sm mb-2 line-clamp-1">
+                {product.purpose}
+              </p>
               <div className="mb-3">
                 <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs mr-2">
                   In Stock: {product.availableStock}
@@ -134,9 +169,11 @@ const ProductCard = ({ product, view }) => {
                 <Button
                   variant="accent"
                   size="sm"
-                  className="flex items-center justify-center gap-1"
-                   onClick={handleAddToCart}
+                  className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#156874] to-[#0d4a52] hover:from-[#0d4a52] hover:to-[#156874] text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg"
+                  onClick={handleAddToCart}
+                  disabled={product.availableStock === 0}
                 >
+                  <ShoppingCart size={16} />
                   <span>Add to Cart</span>
                 </Button>
               </div>
@@ -144,6 +181,13 @@ const ProductCard = ({ product, view }) => {
           </div>
         </div>
       </div>
+      <ToastNotification
+        isVisible={toast.isVisible}
+        type={toast.type}
+        message={toast.message}
+        duration={toast.duration}
+        onClose={hideToast}
+      />
     </div>
   );
 };

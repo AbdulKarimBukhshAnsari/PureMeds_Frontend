@@ -6,9 +6,10 @@ import InputField from "../../../components/ui/Form/InputField";
 import SelectField from "../../../components/ui/Form/SelectField";
 import Button from "../../../components/ui/Buttons/Button";
 import { useCheckout } from "../../../context/Checkout/CheckoutDetailsContext";
+import CustomDropdown from "../../../components/ui/DropDownMenu/CustomDropdown";
 
 function CheckoutForm({ cartItems, onShowPayment }) {
-  const {setCheckoutDetails} = useCheckout()
+  const { setCheckoutDetails } = useCheckout();
   const schema = Yup.object({
     // personal
     firstName: Yup.string().required("First name is required"),
@@ -33,16 +34,18 @@ function CheckoutForm({ cartItems, onShowPayment }) {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    watch, 
+    setValue, 
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = async (data) => {
-     setCheckoutDetails({
+    setCheckoutDetails({
       customerInfo: data,
     });
     console.log("Order Data:", { ...data, cartItems });
-    onShowPayment(true)
+    onShowPayment(true);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="lg:col-span-2 space-y-8">
@@ -121,18 +124,20 @@ function CheckoutForm({ cartItems, onShowPayment }) {
               placeholder={"e.g 1234"}
             />
           </div>
-          <SelectField
+          <CustomDropdown
+            id="country"
             label="Country"
-            name="country"
-            register={register}
-            error={errors.country}
+            value={watch("country")} // current selected value
+            onChange={(val) => setValue("country", val)} // update react-hook-form
             options={[
-              "United States",
-              "Canada",
-              "United Kingdom",
-              "Australia",
-              "Pakistan",
+              { value: "pakistan", label: "Pakistan" },
+              { value: "australia", label: "Australia" },
+              { value: "canada", label: "Canada" },
+              { value: "uk", label: "United Kingdom" },
+              { value: "US", label: "United States" },
             ]}
+            placeholder="Select Country"
+            error={errors.city}
           />
         </div>
       </div>

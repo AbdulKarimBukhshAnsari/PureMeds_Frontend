@@ -24,11 +24,11 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-        <CartProvider>
-          <CheckoutProvider>
+        <CheckoutProvider>
+          <CartProvider>
             <App />
-          </CheckoutProvider>
-        </CartProvider>
+          </CartProvider>
+        </CheckoutProvider>
       </ClerkProvider>
     </BrowserRouter>
   </StrictMode>

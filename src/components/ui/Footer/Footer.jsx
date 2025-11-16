@@ -1,5 +1,13 @@
-import { Facebook, Instagram, Mail, MapPin, Phone, Twitter } from 'lucide-react'
-import React from 'react'
+import {
+  Facebook,
+  Instagram,
+  Mail,
+  MapPin,
+  Phone,
+  Twitter,
+} from "lucide-react";
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -14,7 +22,7 @@ function Footer() {
             </p>
             <div className="flex space-x-4">
               <a href="#" className="hover:text-primary transition">
-                <Facebook size={20} /> 
+                <Facebook size={20} />
               </a>
               <a href="#" className="hover:text-primary transition">
                 <Instagram size={20} />
@@ -27,26 +35,21 @@ function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-2">Quick Links</h3>
             <ul className="space-y-2">
-              <li>
-               
+                <li>
+              <Link to={"/"} className="block hover:text-primary transition">
                   Home
-                
-              </li>
-              <li>
-                
+              </Link>
+                  </li>
+                <li>
+              <Link to={"/categories"} className="block hover:text-primary transition">
                   Categories
-                
-              </li>
+              </Link>
+                  </li>
               <li>
-                
-                  Verify Medicine
-                
-              </li>
-              <li>
-               
-                  About Us
-                
-              </li>
+              <Link to={"/verify"} className="block hover:text-primary transition">
+                Verify Medicine
+              </Link>
+                </li>
             </ul>
           </div>
           <div>
@@ -95,7 +98,7 @@ function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
 
-export default Footer
+export default Footer;

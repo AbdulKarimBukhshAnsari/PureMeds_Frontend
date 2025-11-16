@@ -10,6 +10,8 @@ import {
   FadeInLeft,
   FadeInRight,
 } from "../../components/ui/Animation/ScrollAnimation";
+import { useToast } from "../../hooks/Toast/useToast";
+import ToastNotification from "../../components/ui/Alert/ToastNotification";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -19,6 +21,7 @@ const ProductDetail = () => {
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1); // for showing the quantity on the page
   const { cartItems, addToCart, updateQuantity } = useCart();
+  const [toast, showSuccess, showError, hideToast] = useToast();
 
   // Fetch product by ID
   useEffect(() => {
@@ -62,14 +65,30 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     if (!product) return;
+    if (product.availableStock === 0) {
+        showError(`Sorry, ${product.productName} is out of stock!`);
+        return;
+      }
     if (cartItem) {
       updateQuantity(product.id, quantity);
+      showSuccess(
+        `Quantity updated to ${quantity} in your cart.`
+      );
     } else {
       addToCart(product, quantity);
+      showSuccess(
+        `${quantity} ${
+          quantity > 1 ? "items" : "item"
+        } added to your cart successfully!`
+      );
     }
   };
   // for increasing quantity in the cart
   const increaseQty = () => {
+    if (product.availableStock === 0) {
+        showError(`Sorry, ${product.productName} is out of stock!`);
+        return;
+      }
     if (product && quantity < product.availableStock) {
       const newQty = quantity + 1;
       setQuantity(newQty);
@@ -226,6 +245,13 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+      <ToastNotification
+        isVisible={toast.isVisible}
+        type={toast.type}
+        message={toast.message}
+        duration={toast.duration}
+        onClose={hideToast}
+      />
     </div>
   );
 };

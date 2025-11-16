@@ -1,8 +1,10 @@
+import ScrollToTop from "./components/ui/Scroll/ScrollToTop";
 import AppRouter from "./config/routing/router";
 function App() {
   return (
     <>
-      <AppRouter/>
+      <ScrollToTop />
+      <AppRouter />
     </>
   );
 }

@@ -36,7 +36,7 @@ function FeaturedProducts({ products = [], loading = false }) {
                 whileTap={{ scale: 0.95 }}
               >
                 <Button
-                  variant="outline"
+                  variant=""
                   className="border-2 border-primary text-primary hover:bg-primary-hover hover:text-white transition-all duration-300 rounded-xl px-6 py-3 flex items-center gap-2"
                 >
                   {SECTION_TITLES.featured.viewAllText}

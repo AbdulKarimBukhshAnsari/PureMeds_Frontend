@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@clerk/clerk-react";
-import { getOrdersByUserId, getOrderById, deleteOrder } from "../../../apis/order.api";
+import {
+  getOrdersByUserId,
+  getOrderById,
+  deleteOrder,
+} from "../../../apis/order.api";
 import OrderModal from "./Modals/OrderModal";
 import Loading from "../../../components/ui/Loader/Loading";
+import { useToast } from "../../../hooks/Toast/useToast";
+import ToastNotification from "../../../components/ui/Alert/ToastNotification";
 
 function Orders() {
   const { getToken } = useAuth();
@@ -12,6 +18,7 @@ function Orders() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loadingOrder, setLoadingOrder] = useState(false);
   const [cancellingOrder, setCancellingOrder] = useState(null);
+  const [toast, showSuccess, showError, hideToast] = useToast();
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -70,10 +77,12 @@ function Orders() {
       // Close modal
       setIsModalOpen(false);
       setSelectedOrder(null);
-      alert("Order cancelled successfully. Stock has been restored and payment has been deleted.");
+      showSuccess(
+        "Order cancelled successfully. Stock has been restored and payment has been deleted."
+      );
     } catch (error) {
       console.error("Error cancelling order:", error);
-      alert("Failed to cancel order. Please try again.");
+      showError("Failed to cancel order. Please try again.");
     } finally {
       setCancellingOrder(null);
     }
@@ -191,6 +200,14 @@ function Orders() {
           onCancel={handleCancelOrder}
         />
       )}
+
+      <ToastNotification
+        isVisible={toast.isVisible}
+        type={toast.type}
+        message={toast.message}
+        duration={toast.duration}
+        onClose={hideToast}
+      />
     </div>
   );
 }

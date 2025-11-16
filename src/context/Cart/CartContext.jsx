@@ -5,10 +5,11 @@ const CartContext = createContext();
 const CART_STORAGE_KEY = "puremeds_cart_items";
 
 export const CartProvider = ({ children }) => {
-  // Load from sessionStorage on mount
+  // Load from localStorage on mount
   const [cartItems, setCartItemsState] = useState(() => {
     try {
-      const stored = sessionStorage.getItem(CART_STORAGE_KEY);
+      const stored = localStorage.getItem(CART_STORAGE_KEY);
+      console.log("Loaded cart from storage:", stored);
       return stored ? JSON.parse(stored) : [];
     } catch (error) {
       console.error("Error loading cart from storage:", error);
@@ -16,10 +17,10 @@ export const CartProvider = ({ children }) => {
     }
   });
 
-  // Save to sessionStorage whenever cartItems changes
+  // Save to localStorage whenever cartItems changes
   useEffect(() => {
     try {
-      sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
     } catch (error) {
       console.error("Error saving cart to storage:", error);
     }
@@ -64,7 +65,7 @@ export const CartProvider = ({ children }) => {
 
   const clearCart = () => {
     setCartItemsState([]);
-    sessionStorage.removeItem(CART_STORAGE_KEY);
+    localStorage.removeItem(CART_STORAGE_KEY);
   };
 
   return (

@@ -62,7 +62,15 @@ function HeroSection() {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center gap-2">
+      <div
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+        onClick={() => {
+          window.scrollBy({
+            top: 500, // amount to scroll down in pixels
+            behavior: "smooth",
+          });
+        }}
+      >
         <motion.p
           animate={{
             opacity: [0.6, 1, 0.6],

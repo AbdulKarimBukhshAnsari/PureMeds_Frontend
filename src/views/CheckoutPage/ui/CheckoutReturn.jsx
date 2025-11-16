@@ -9,6 +9,8 @@ import { useCart } from "../../../context/Cart/CartContext";
 import { useCheckout } from "../../../context/Checkout/CheckoutDetailsContext";
 import { createOrder } from "../../../apis/order.api";
 import { createPayment } from "../../../apis/payment.api";
+import ToastNotification from "../../../components/ui/Alert/ToastNotification";
+import { useToast } from "../../../hooks/Toast/useToast";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -23,6 +25,7 @@ const CheckoutReturn = () => {
   const hasProcessedRef = useRef(false); // Use ref to prevent duplicate processing
   const { cartItems, clearCart } = useCart();
   const { checkoutDetails } = useCheckout();
+     const [toast, showSuccess, showError, hideToast] = useToast();
 
   useEffect(() => {
     // Prevent duplicate processing
@@ -198,7 +201,7 @@ const CheckoutReturn = () => {
               
               console.error("Order error message:", errorMsg);
               setStatus("error");
-              alert(`Payment successful but order creation failed.\n\nError: ${errorMsg}\n\nPlease contact support with session ID: ${sessionId}`);
+              showError(`Payment successful but order creation failed.\n\nError: ${errorMsg}\n\nPlease contact support with session ID: ${sessionId}`);
             }
           } else {
             console.error("❌ Missing or invalid data for order creation:", {
@@ -210,7 +213,7 @@ const CheckoutReturn = () => {
               customerInfoKeys: finalCheckoutDetails?.customerInfo ? Object.keys(finalCheckoutDetails.customerInfo) : null
             });
             setStatus("error");
-            alert(`Payment successful but cannot create order. Missing or invalid data.\n\nCheckout Details: ${hasValidCheckoutDetails ? '✅ Valid' : '❌ Missing/Invalid'}\nCart Items: ${hasValidCartItems ? `✅ Valid (${finalCartItems?.length || 0} items)` : '❌ Missing/Invalid'}\n\nPlease contact support with session ID: ${sessionId}`);
+            showError(`Payment successful but cannot create order. Missing or invalid data.\n\nCheckout Details: ${hasValidCheckoutDetails ? '✅ Valid' : '❌ Missing/Invalid'}\nCart Items: ${hasValidCartItems ? `✅ Valid (${finalCartItems?.length || 0} items)` : '❌ Missing/Invalid'}\n\nPlease contact support with session ID: ${sessionId}`);
           }
         } else if (sessionData.paymentStatus === "unpaid" || sessionData.paymentStatus === "open") {
           console.log("Payment status is UNPAID or OPEN");
@@ -233,7 +236,7 @@ const CheckoutReturn = () => {
         }
         
         setStatus("error");
-        alert(`Error processing payment return.\n\nError: ${errorMsg}\n\nPlease try again or contact support.`);
+        showError(`Error processing payment return.\n\nError: ${errorMsg}\n\nPlease try again or contact support.`);
       }
     };
 
@@ -323,6 +326,13 @@ const CheckoutReturn = () => {
           </div>
         </div>
       </div>
+      <ToastNotification
+              isVisible={toast.isVisible}
+              type={toast.type}
+              message={toast.message}
+              duration={toast.duration}
+              onClose={hideToast}
+            />
     </div>
   );
 };

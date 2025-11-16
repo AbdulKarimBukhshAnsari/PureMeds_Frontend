@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   X as CloseIcon,
   Package,
@@ -8,6 +8,7 @@ import {
   Truck,
   DollarSign,
 } from "lucide-react";
+import ModalConfirmationAlert from "../../../../components/ui/Alert/ModalConfirmationAlert";
 
 export default function OrderModal({ order, isOpen, onClose, onCancel }) {
   // Prevent body scroll when modal is open
@@ -23,6 +24,18 @@ export default function OrderModal({ order, isOpen, onClose, onCancel }) {
   }, [isOpen]);
 
   if (!isOpen) return null;
+  const [modalData, setModalData] = useState({
+    isOpen: false,
+    onClose: () => {},
+    onConfirm: () => {},
+    title: "",
+    message: "",
+    confirmText: "",
+    cancelText: "",
+    confirmVariant: "",
+    cancelVariant: "",
+    isAsync: false,
+  });
 
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
@@ -43,7 +56,8 @@ export default function OrderModal({ order, isOpen, onClose, onCancel }) {
     }
   };
 
-  const canCancel = order?.status && 
+  const canCancel =
+    order?.status &&
     !["delivered", "cancelled"].includes(order.status.toLowerCase());
 
   return (
@@ -75,10 +89,29 @@ export default function OrderModal({ order, isOpen, onClose, onCancel }) {
             </span>
             {canCancel && (
               <button
+                // onClick={() => {
+                //   if (window.confirm("Are you sure you want to cancel this order? This action cannot be undone.")) {
+                //     onCancel(order?._id);
+                //   }
+                // }}
+
                 onClick={() => {
-                  if (window.confirm("Are you sure you want to cancel this order? This action cannot be undone.")) {
-                    onCancel(order?._id);
-                  }
+                  setModalData({
+                    isOpen: true,
+                    onClose: () =>
+                      setModalData((prev) => ({
+                        ...prev,
+                        isOpen: false,
+                      })),
+                    onConfirm: async () => onCancel(order?._id),
+                    title: "Confirm Delete",
+                    message: "Are you sure you want to cancel this order?",
+                    confirmText: "Yes",
+                    cancelText: "No",
+                    confirmVariant: "primary",
+                    cancelVariant: "secondary",
+                    isAsync: true,
+                  });
                 }}
                 className="px-3 py-1.5 bg-red-600 text-white rounded-lg text-sm hover:bg-red-700 transition"
               >
@@ -97,7 +130,8 @@ export default function OrderModal({ order, isOpen, onClose, onCancel }) {
               </h4>
               <div className="text-sm text-gray-700 space-y-0.5 flex-1 overflow-y-auto">
                 <p className="font-medium text-sm">
-                  {order?.customerInfo?.firstName} {order?.customerInfo?.lastName}
+                  {order?.customerInfo?.firstName}{" "}
+                  {order?.customerInfo?.lastName}
                 </p>
                 <p className="text-sm">{order?.customerInfo?.address}</p>
                 <p className="text-sm">
@@ -105,7 +139,9 @@ export default function OrderModal({ order, isOpen, onClose, onCancel }) {
                   {order?.customerInfo?.zip}
                 </p>
                 <p className="text-sm">{order?.customerInfo?.country}</p>
-                <p className="mt-1 text-sm">Phone: {order?.customerInfo?.phone}</p>
+                <p className="mt-1 text-sm">
+                  Phone: {order?.customerInfo?.phone}
+                </p>
                 <p className="text-sm">Email: {order?.customerInfo?.email}</p>
               </div>
             </div>
@@ -124,14 +160,17 @@ export default function OrderModal({ order, isOpen, onClose, onCancel }) {
                   >
                     <div className="flex-1 min-w-0 pr-2">
                       <p className="font-medium text-sm truncate">
-                        {item.productName || item.productId?.productName || "Product"}
+                        {item.productName ||
+                          item.productId?.productName ||
+                          "Product"}
                       </p>
                       <p className="text-xs text-gray-500">
                         {item.quantity} × Rs. {item.price?.toFixed(2) || "0.00"}
                       </p>
                     </div>
                     <p className="font-semibold text-sm whitespace-nowrap">
-                      Rs. {((item.quantity || 0) * (item.price || 0)).toFixed(2)}
+                      Rs.{" "}
+                      {((item.quantity || 0) * (item.price || 0)).toFixed(2)}
                     </p>
                   </div>
                 ))}
@@ -149,11 +188,15 @@ export default function OrderModal({ order, isOpen, onClose, onCancel }) {
                 <div className="space-y-1.5 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal:</span>
-                    <span className="font-medium">Rs. {order?.subtotal?.toFixed(2) || "0.00"}</span>
+                    <span className="font-medium">
+                      Rs. {order?.subtotal?.toFixed(2) || "0.00"}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Shipping:</span>
-                    <span className="font-medium">Rs. {order?.shipping?.toFixed(2) || "0.00"}</span>
+                    <span className="font-medium">
+                      Rs. {order?.shipping?.toFixed(2) || "0.00"}
+                    </span>
                   </div>
                   <div className="flex justify-between pt-1.5 border-t border-gray-300">
                     <span className="font-semibold">Total:</span>
@@ -171,7 +214,9 @@ export default function OrderModal({ order, isOpen, onClose, onCancel }) {
                   Payment Method
                 </h4>
                 <p className="text-sm text-gray-700 capitalize mb-2">
-                  {order?.paymentMethod === "cod" ? "Cash on Delivery" : order?.paymentMethod || "N/A"}
+                  {order?.paymentMethod === "cod"
+                    ? "Cash on Delivery"
+                    : order?.paymentMethod || "N/A"}
                 </p>
                 <h4 className="text-sm font-semibold text-support mb-2 flex items-center">
                   <Calendar size={14} className="mr-2 text-primary" />
@@ -201,7 +246,7 @@ export default function OrderModal({ order, isOpen, onClose, onCancel }) {
           </div>
         </div>
       </div>
+      <ModalConfirmationAlert {...modalData} />
     </div>
   );
 }
-

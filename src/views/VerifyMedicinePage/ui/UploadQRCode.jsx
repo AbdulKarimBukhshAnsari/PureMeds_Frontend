@@ -3,12 +3,15 @@ import { Html5Qrcode } from "html5-qrcode";
 import Button from "../../../components/ui/Buttons/Button";
 import { ArrowLeft, Upload } from "lucide-react";
 import { SupplyChain } from "../../../utils/mockData";
+import ToastNotification, {  } from "../../../components/ui/Alert/ToastNotification";
+import { useToast } from "../../../hooks/Toast/useToast";
 
 function UploadQRCode({ onFake, onVerified, onBack }) {
   const [isLoading, setIsLoading] = useState(false);
   const [preview, setPreview] = useState(null);
   const [file, setFile] = useState(null);
   const fileRef = useRef(null);
+  const [toast, showSuccess, showError, hideToast] = useToast();
 
   const openFilePicker = () => {
     // Trigger hidden input click
@@ -47,14 +50,17 @@ function UploadQRCode({ onFake, onVerified, onBack }) {
       // Simulated verification
       if (decodedObj.batchId === SupplyChain[0].batchId) {
         onVerified();
+        showSuccess("QR Code verified successfully!")
       } else {
         onFake();
+        showError("This QR code does not match the supply chain record.");
       }
 
       // Stop and clear the QR reader instance to avoid double rendering
       html5QrCode.clear();
     } catch (err) {
       console.error("QR scan error:", err);
+      showError("The uploaded image is not a valid QR code. Add another image.");
     } finally {
       setIsLoading(false);
     }
@@ -137,6 +143,14 @@ function UploadQRCode({ onFake, onVerified, onBack }) {
 
       {/* Hidden QR Reader Container */}
       <div id="qr-reader-file" className="hidden" />
+
+      <ToastNotification
+        isVisible={toast.isVisible}
+        type={toast.type}
+        message={toast.message}
+        duration={toast.duration}
+        onClose={hideToast}
+      />
     </div>
   );
 }

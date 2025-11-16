@@ -2,9 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import Button from "../../../components/ui/Buttons/Button";
 import { Link } from "react-router-dom";
-import { getComplaintsByUserId, getComplaintById, deleteComplaint } from "../../../apis/complaint.api";
+import {
+  getComplaintsByUserId,
+  getComplaintById,
+  deleteComplaint,
+} from "../../../apis/complaint.api";
 import ComplaintModal from "./Modals/ComplaintModal";
 import Loading from "../../../components/ui/Loader/Loading";
+import ModalConfirmationAlert from "../../../components/ui/Alert/ModalConfirmationAlert";
+import { useToast } from "../../../hooks/Toast/useToast";
+import ToastNotification from "../../../components/ui/Alert/ToastNotification";
 
 function UserComplaints() {
   const { getToken } = useAuth();
@@ -13,7 +20,20 @@ function UserComplaints() {
   const [selectedComplaint, setSelectedComplaint] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loadingComplaint, setLoadingComplaint] = useState(false);
+  const [modalData, setModalData] = useState({
+    isOpen: false,
+    onClose: () => {},
+    onConfirm: () => {},
+    title: "",
+    message: "",
+    confirmText: "",
+    cancelText: "",
+    confirmVariant: "",
+    cancelVariant: "",
+    isAsync: false,
+  });
   const [deletingComplaint, setDeletingComplaint] = useState(null);
+   const [toast, showSuccess, showError, hideToast] = useToast();
 
   useEffect(() => {
     const fetchComplaints = async () => {
@@ -57,9 +77,6 @@ function UserComplaints() {
   };
 
   const handleDeleteClick = async (complaintId) => {
-    if (!window.confirm("Are you sure you want to delete this complaint?")) {
-      return;
-    }
 
     try {
       setDeletingComplaint(complaintId);
@@ -68,6 +85,7 @@ function UserComplaints() {
         throw new Error("Authentication required");
       }
       await deleteComplaint(complaintId, token);
+      showSuccess("Complaint successfully deleted.")
       // Refresh complaints list
       const response = await getComplaintsByUserId(token);
       if (response?.data) {
@@ -75,7 +93,7 @@ function UserComplaints() {
       }
     } catch (error) {
       console.error("Error deleting complaint:", error);
-      alert("Failed to delete complaint. Please try again.");
+      showError("Failed to delete complaint. Please try again.")
     } finally {
       setDeletingComplaint(null);
     }
@@ -102,7 +120,9 @@ function UserComplaints() {
       <div className="bg-white rounded-lg shadow-sm overflow-hidden">
         {complaints.length === 0 ? (
           <div className="p-8 text-center text-gray-500">
-            <p>No complaints found. Submit your first complaint to get started.</p>
+            <p>
+              No complaints found. Submit your first complaint to get started.
+            </p>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -166,11 +186,32 @@ function UserComplaints() {
                           {loadingComplaint ? "Loading..." : "View"}
                         </button>
                         <button
-                          onClick={() => handleDeleteClick(complaint._id)}
+                          onClick={() => {
+                            setModalData({
+                              isOpen: true,
+                              onClose: () =>
+                                setModalData((prev) => ({
+                                  ...prev,
+                                  isOpen: false,
+                                })),
+                              onConfirm: async () =>
+                                handleDeleteClick(complaint._id),
+                              title: "Confirm Delete",
+                              message:
+                                "Are you sure you want to delete this complaint?",
+                              confirmText: "Yes, Delete",
+                              cancelText: "No, Cancel",
+                              confirmVariant: "primary",
+                              cancelVariant: "secondary",
+                              isAsync: true,
+                            });
+                          }}
                           disabled={deletingComplaint === complaint._id}
                           className="text-red-600 hover:text-red-800 cursor-pointer disabled:opacity-50"
                         >
-                          {deletingComplaint === complaint._id ? "Deleting..." : "Delete"}
+                          {deletingComplaint === complaint._id
+                            ? "Deleting..."
+                            : "Delete"}
                         </button>
                       </div>
                     </td>
@@ -191,6 +232,15 @@ function UserComplaints() {
           }}
         />
       )}
+
+      <ModalConfirmationAlert {...modalData} />
+      <ToastNotification
+        isVisible={toast.isVisible}
+        type={toast.type}
+        message={toast.message}
+        duration={toast.duration}
+        onClose={hideToast}
+      />
     </div>
   );
 }
