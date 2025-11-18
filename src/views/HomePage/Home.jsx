@@ -1,7 +1,6 @@
 import React from "react";
 import { useAuth } from "@clerk/clerk-react";
 import HeroSection from "./components/HeroSection";
-import FeaturesSection from "./components/FeaturesSection";
 import BlockchainSection from "./components/BlockchainSection";
 import StatsSection from "./components/StatsSection";
 import FeaturedProducts from "./components/FeaturedProducts";
@@ -29,11 +28,12 @@ function Home() {
   }, [getToken]);
 
   // Fetch featured products (3 items) - works without authentication
-  const { products: featuredProducts, loading: featuredLoading } = useFetchProduct({
-    featured: true,
-    token,
-    autoFetch: true,
-  });
+  const { products: featuredProducts, loading: featuredLoading } =
+    useFetchProduct({
+      featured: true,
+      token,
+      autoFetch: true,
+    });
 
   console.log("Featured Products:", featuredProducts);
 

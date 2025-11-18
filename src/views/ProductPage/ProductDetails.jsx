@@ -66,14 +66,12 @@ const ProductDetail = () => {
   const handleAddToCart = () => {
     if (!product) return;
     if (product.availableStock === 0) {
-        showError(`Sorry, ${product.productName} is out of stock!`);
-        return;
-      }
+      showError(`Sorry, ${product.productName} is out of stock!`);
+      return;
+    }
     if (cartItem) {
       updateQuantity(product.id, quantity);
-      showSuccess(
-        `Quantity updated to ${quantity} in your cart.`
-      );
+      showSuccess(`Quantity updated to ${quantity} in your cart.`);
     } else {
       addToCart(product, quantity);
       showSuccess(
@@ -86,9 +84,9 @@ const ProductDetail = () => {
   // for increasing quantity in the cart
   const increaseQty = () => {
     if (product.availableStock === 0) {
-        showError(`Sorry, ${product.productName} is out of stock!`);
-        return;
-      }
+      showError(`Sorry, ${product.productName} is out of stock!`);
+      return;
+    }
     if (product && quantity < product.availableStock) {
       const newQty = quantity + 1;
       setQuantity(newQty);
@@ -133,14 +131,14 @@ const ProductDetail = () => {
       <div className="container mx-auto px-4 pt-24">
         <div className="flex items-center justify-between py-5 w-full">
           <FadeInLeft>
-            <h1 className="text-3xl font-bold text-gray-800">
-              Product Details
+            <h1 className="text-4xl font-bold text-orange-400">
+              Medicine Details
             </h1>
           </FadeInLeft>
           <FadeInRight>
             <Button
-              variant="secondary"
-              className="flex items-center gap-2"
+              variant=""
+              className="flex border border-primary text-primary hover:bg-gradient-to-r hover:from-primary hover:to-orange-400 hover:text-white hover:border-background items-center gap-2"
               onClick={() => window.history.back()}
             >
               <ArrowLeft size={18} />
@@ -152,54 +150,56 @@ const ProductDetail = () => {
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Left: Image */}
-            <div>
+            <div className="w-full aspect-video flex items-center justify-center bg-white">
               <img
                 src={product.productImage}
                 alt={product.productName}
-                className="w-full h-full rounded-lg"
+                className="max-w-full max-h-full object-contain object-center rounded-lg"
               />
             </div>
 
             {/* Right: Details */}
             <div>
               <div className="flex items-start justify-between gap-2 mb-1 ">
-                {/* Product Title */}
-                <h1 className="text-3xl text-primary font-bold mb-2">
+                <h1 className="text-3xl text-orange-400 font-bold mb-2">
                   {product.productName}
                 </h1>
               </div>
-              <p className="text-gray-600 text-lg mb-4">{product.purpose}</p>
 
-              {/* Manufacturer + Info + Side Effects*/}
-              <div className="mb-4 mt-6 space-y-3">
-                <p className="text-gray-600">
+              <p className="text-primary text-lg mb-4">{product.purpose}</p>
+
+              {/* Manufacturer + Info */}
+              <div className="mb-4 mt-6 space-y-3 text-lg">
+                <div className="text-gray-600">
                   <p className="font-semibold text-primary">Chemical Name</p>
                   <p>{product.chemicalName}</p>
-                </p>
-                <p className="text-gray-600">
+                </div>
+
+                <div className="text-gray-600">
                   <p className="font-semibold text-primary">Manufacturer</p>
                   <p>{product.manufacturer}</p>
-                </p>
-                <p className="text-gray-600">
+                </div>
+
+                <div className="text-gray-600">
                   <p className="font-semibold text-primary">Category</p>
                   <p>{getCategoryName(product.category)}</p>
-                </p>
-                <p className="text-gray-600">
+                </div>
+
+                <div className="text-gray-600">
                   <p className="font-semibold text-primary">Side Effects</p>
                   <p>
                     {Array.isArray(product.sideEffects)
                       ? JSON.parse(product.sideEffects[0]).join(", ")
                       : "None"}
                   </p>
-                </p>
+                </div>
               </div>
 
               {/* Price + Cart + Quantity */}
-              <div className="flex flex-row align-justify items-center mt-10">
-                {/* Quantity + Add to Cart */}
+              <div className="flex flex-row items-center mt-10">
                 <div className="flex items-center gap-4">
                   {/* Quantity Counter */}
-                  <div className="flex items-center border rounded-md overflow-hidden">
+                  <div className="text-primary flex items-center border border-primary rounded-md overflow-hidden">
                     <button
                       className="px-4 py-2 bg-white hover:bg-gray-300 transition cursor-pointer rounded-l-md"
                       onClick={decreaseQty}
@@ -207,12 +207,14 @@ const ProductDetail = () => {
                     >
                       -
                     </button>
+
                     <input
                       type="number"
                       value={quantity}
                       readOnly
                       className="flex justify-center items-center w-11 text-center focus:outline-none"
                     />
+
                     <button
                       className="px-4 py-2 bg-white hover:bg-gray-300 transition cursor-pointer rounded-r-md"
                       onClick={increaseQty}
@@ -224,9 +226,9 @@ const ProductDetail = () => {
 
                   {/* Add to Cart Button */}
                   <Button
-                    variant="primary"
+                    variant=""
                     size="md"
-                    className="flex items-center justify-center gap-2 px-4  cursor-pointer"
+                    className="flex items-center bg-primary text-white  hover:bg-gradient-to-r hover:from-primary hover:to-orange-400 justify-center gap-2 px-4 cursor-pointer"
                     onClick={handleAddToCart}
                   >
                     <ShoppingCart size={20} />
@@ -235,7 +237,7 @@ const ProductDetail = () => {
                 </div>
 
                 {/* Price */}
-                <div className="flex ml-35">
+                <div className="flex ml-auto">
                   <span className="text-4xl font-bold text-primary">
                     Rs. {product.price}
                   </span>

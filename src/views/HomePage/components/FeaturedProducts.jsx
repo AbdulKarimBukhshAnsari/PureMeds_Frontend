@@ -13,7 +13,7 @@ import Loading from "../../../components/ui/Loader/Loading";
 
 function FeaturedProducts({ products = [], loading = false }) {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <FadeInWhenVisible>
           <div className="text-center mb-11">
@@ -60,7 +60,7 @@ function FeaturedProducts({ products = [], loading = false }) {
                   >
                     <Button
                       variant=""
-                      className="bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white transition-all duration-300 rounded-xl px-6 py-3 flex items-center gap-2"
+                      className="bg-gradient-to-r from-orange-400 to-orange-500 hover:from-primary hover:to-orange-400 text-white transition-all duration-300 rounded-xl px-6 py-3 flex items-center gap-2"
                     >
                       {SECTION_TITLES.featured.viewAllText}
                       <ArrowRight size={18} />

@@ -1,13 +1,15 @@
-
 import { motion } from "framer-motion";
 import { FadeInWhenVisible } from "../../../components/ui/Animation/ScrollAnimation";
-import { BLOCKCHAIN_STEPS, SECTION_TITLES } from "../../../constants/home.constants";
+import {
+  BLOCKCHAIN_STEPS,
+  SECTION_TITLES,
+} from "../../../constants/home.constants";
 import bgImage from "../../../assets/bg16.png";
 import topRightImage from "../../../assets/bg19.png";
 
 function BlockchainSection() {
   return (
-    <section className="relative py-12 md:py-16 bg-[#f7fffd] overflow-hidden">
+    <section className="relative py-12 md:py-16 bg-background overflow-hidden">
       {/* Background blobs / dots */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-10 -left-10 w-[300px] h-[300px] bg-orange-500/10 rounded-full blur-3xl"></div>
@@ -45,9 +47,13 @@ function BlockchainSection() {
                 <step.icon size={24} className="text-orange-400" />
               </div>
 
-              <h3 className="text-primary font-semibold text-lg mb-1">{step.title}</h3>
+              <h3 className="text-primary font-semibold text-lg mb-1">
+                {step.title}
+              </h3>
 
-              <p className="text-gray-600 text-md leading-relaxed">{step.description}</p>
+              <p className="text-gray-600 text-md leading-relaxed">
+                {step.description}
+              </p>
             </motion.div>
           ))}
         </div>
