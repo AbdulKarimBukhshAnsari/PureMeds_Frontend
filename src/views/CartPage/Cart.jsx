@@ -8,7 +8,7 @@ import React from "react";
 import CartItemCard from "./ui/CartItemCard";
 import Button from "../../components/ui/Buttons/Button";
 import { Link } from "react-router-dom";
-import { ArrowRight, ShoppingBag } from "lucide-react";
+import { ArrowRight, ShoppingBag, ShoppingCart } from "lucide-react";
 import OrderSummary from "../../components/ui/OrderSummary/OrderSummary";
 import CartEmpty from "./ui/CartEmpty";
 import { useCart } from "../../context/Cart/CartContext";
@@ -25,7 +25,7 @@ function Cart() {
   };
 
   const handleRemoveItem = (id) => {
-    removeFromCart(id); 
+    removeFromCart(id);
   };
 
   const subtotal = cartItems.reduce((t, i) => t + i.price * i.quantity, 0);
@@ -35,21 +35,34 @@ function Cart() {
     <div>
       <div className="bg-background min-h-screen">
         <div className="container mx-auto px-4 py-30">
-          <h1 className="text-3xl font-bold text-gray-800 mb-8">Your Cart</h1>
+          <span className="flex flex-row items-center gap-3 mb-8">
+            {/* Gradient wrapper */}
+            <span
+              className="flex flex-row items-center gap-3 text-3xl font-bold 
+                   bg-gradient-to-r from-primary to-orange-400 
+                   bg-clip-text text-transparent"
+            >
+              <ShoppingCart
+                size={36}
+                className="text-primary"
+              />
+              Your Cart
+            </span>
+          </span>
           {cartItems.length > 0 ? (
             <div className="flex flex-col lg:flex-row gap-8">
               <div className="lg:w-2/3 bg-white rounded-lg shadow-sm overflow-hidden">
                 <div className="hidden md:grid grid-cols-12 gap-4 p-6 border-b border-gray-200 bg-gray-50">
-                  <div className="col-span-6 font-semibold text-gray-800">
+                  <div className="col-span-6 font-semibold text-primary-hover">
                     Product
                   </div>
-                  <div className="col-span-2 text-center font-semibold text-gray-800">
+                  <div className="col-span-2 text-center font-semibold text-primary-hover">
                     Quantity
                   </div>
-                  <div className="col-span-2 text-center font-semibold text-gray-800">
+                  <div className="col-span-2 text-center font-semibold text-primary-hover">
                     Price
                   </div>
-                  <div className="col-span-2 text-center font-semibold text-gray-800">
+                  <div className="col-span-2 text-center font-semibold text-primary-hover">
                     Total
                   </div>
                 </div>
@@ -63,7 +76,10 @@ function Cart() {
                 ))}
                 <div className="p-6">
                   <Link to="/categories">
-                    <Button variant="secondary" className="flex items-center cursor-pointer">
+                    <Button
+                      variant="secondary"
+                      className="flex items-center cursor-pointer"
+                    >
                       <ShoppingBag className="h-4 w-4 mr-2" />
                       Continue Shopping
                     </Button>
@@ -81,7 +97,7 @@ function Cart() {
                     <Button
                       fullWidth
                       variant="primary"
-                      className="flex items-center justify-center cursor-pointer"
+                      className="flex items-center justify-center cursor-pointer bg-gradient-to-r from-orange-400 to-orange-500 hover:from-primary hover:to-orange-400"
                     >
                       Proceed to Checkout
                       <ArrowRight className="ml-2 h-4 w-4" />

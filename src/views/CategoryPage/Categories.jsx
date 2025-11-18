@@ -105,26 +105,70 @@ const Categories = () => {
   }));
 
   return (
-    <div className="bg-background">
+    <div className="bg-orange-50/30">
       <div className="container mx-auto px-2 py-30">
         <FadeInLeft>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            Medicine Categories
-          </h1>
-          <p className="text-gray-600 mb-6">
-            Browse our wide range of verified medicines
-          </p>
+          <div className="mb-5 p-4 text-center">
+            <span className="text-5xl font-bold bg-orange-400 bg-clip-text text-transparent ">
+              {categories.find((c) => c.id === activeCategory)?.name}
+            </span>
+          </div>
         </FadeInLeft>
+
+        {/* Search and View Controls */}
+        <div className="bg-orange-50/50  rounded-xl  mb-6">
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+            <div className="relative flex-grow">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search size={18} className="text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search medicines..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 w-full px-4 py-2 border border-gray-400 rounded-2xl focus:outline-none focus:ring-1 focus:ring-primary"
+              />
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center border border-gray-400 rounded-md overflow-hidden">
+                <button
+                  className={`p-2 ${
+                    viewMode === "grid"
+                      ? "bg-orange-400 text-white"
+                      : "bg-orange-50/50 text-orange-400"
+                  }`}
+                  onClick={() => setViewMode("grid")}
+                  aria-label="Grid view"
+                >
+                  <Grid size={18} />
+                </button>
+                <button
+                  className={`p-2 ${
+                    viewMode === "list"
+                      ? "bg-orange-400 text-white"
+                      : "bg-orange-50/50 text-orange-400"
+                  }`}
+                  onClick={() => setViewMode("list")}
+                  aria-label="List view"
+                >
+                  <ListIcon size={18} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Category Navigation */}
         <div className="mb-6 relative flex items-center">
           {/* Left Scroll Button */}
           {scrollPosition > 0 && (
             <button
               onClick={scrollLeft}
-              className="absolute -left-4 z-10 bg-teal-50 text-primary hover:bg-teal-150 rounded-full shadow-md p-2"
+              className="absolute -left-4 z-10 bg-primary/90 text-orange-400 hover:bg-teal-150 rounded-full shadow-md p-2"
               style={{ transform: "translateY(-50%)", top: "50%" }}
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft className="h-5 w-5" strokeWidth={4}/>
             </button>
           )}
 
@@ -138,8 +182,8 @@ const Categories = () => {
                 key={category.id}
                 className={`px-4 py-2 border-gray-400 rounded-full whitespace-nowrap transition ${
                   activeCategory === category.id
-                    ? "bg-primary text-white"
-                    : "bg-background border hover:bg-gray-100"
+                    ? "bg-gradient-to-r from-primary to-orange-400 text-white"
+                    : "bg-orange-50/50 border hover:bg-gray-100"
                 }`}
                 onClick={() => setActiveCategory(category.id)}
               >
@@ -152,62 +196,17 @@ const Categories = () => {
           {scrollPosition < maxScroll && (
             <button
               onClick={scrollRight}
-              className="absolute -right-4 z-10 bg-teal-50 text-primary hover:bg-teal-150 rounded-full shadow-md p-2"
+              className="absolute -right-4 z-10 bg-primary/90 text-orange-400 hover:bg-teal-150 rounded-full shadow-md p-2"
               style={{ transform: "translateY(-50%)", top: "50%" }}
             >
-              <ChevronRight className="h-5 w-5" />
+              <ChevronRight className="h-5 w-5"  strokeWidth={4}/>
             </button>
           )}
         </div>
-
-        {/* Search and View Controls */}
-        <div className="bg-white border-gray-400 rounded-lg shadow-sm p-4 mb-6">
-          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-            <div className="relative flex-grow">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search size={18} className="text-gray-400" />
-              </div>
-              <input
-                type="text"
-                placeholder="Search medicines..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
-              />
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="flex items-center border border-gray-400 rounded-md overflow-hidden">
-                <button
-                  className={`p-2 ${
-                    viewMode === "grid"
-                      ? "bg-primary-hover text-white"
-                      : "bg-background text-primary"
-                  }`}
-                  onClick={() => setViewMode("grid")}
-                  aria-label="Grid view"
-                >
-                  <Grid size={18} />
-                </button>
-                <button
-                  className={`p-2 ${
-                    viewMode === "list"
-                      ? "bg-primary-hover text-white"
-                      : "bg-background text-primary"
-                  }`}
-                  onClick={() => setViewMode("list")}
-                  aria-label="List view"
-                >
-                  <ListIcon size={18} />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
         {/* Main Content */}
         <FadeInLeft>
-          <h2 className="text-xl font-semibold mb-4">
-            {categories.find((c) => c.id === activeCategory)?.name}
-            {debouncedSearch && ` - Search: "${debouncedSearch}"`}
+          <h2 className="text-sm  text-primary font-semibold mb-4">
+            {debouncedSearch && `Search: "${debouncedSearch}"`}
           </h2>
         </FadeInLeft>
 
@@ -236,13 +235,21 @@ const Categories = () => {
               // Grid View
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {transformedProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} view={"grid"} />
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    view={"grid"}
+                  />
                 ))}
               </div>
             ) : (
               <div className="space-y-4">
                 {transformedProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} view={"list"} />
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    view={"list"}
+                  />
                 ))}
               </div>
             )}

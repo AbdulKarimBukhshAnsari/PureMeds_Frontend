@@ -47,7 +47,7 @@ const ProductCard = ({ product, view }) => {
       <div className="p-5">
         {/* Product Name */}
         <Link to={`/product/${product.id}`}>
-          <h3 className="font-bold text-lg mb-2 text-gray-800 hover:text-[#156874] transition-colors line-clamp-1 ">
+          <h3 className="font-bold text-xl mb-2 text-primary hover:text-[#156874] transition-colors line-clamp-1 ">
             {product.productName}
           </h3>
         </Link>
@@ -57,13 +57,13 @@ const ProductCard = ({ product, view }) => {
         </p>
 
         {/* Purpose */}
-        <p className="text-gray-500 text-sm mb-4 line-clamp-2 min-h-[2.5rem]">
+        <p className="text-gray-500 text-sm mb-2 line-clamp-2 min-h-[2.5rem]">
           {product.purpose}
         </p>
 
         {/* Category Badge */}
         <div className="mb-4">
-          <span className="inline-block bg-[#156874]/10 text-[#156874] px-3 py-1 rounded-full text-xs font-medium capitalize">
+          <span className="inline-block bg-orange-400/10 text-orange-400 px-3 py-1 rounded-full text-xs font-medium capitalize">
             {getCategoryName(product.category)}
           </span>
         </div>
@@ -92,9 +92,9 @@ const ProductCard = ({ product, view }) => {
         <div className="flex gap-3">
           <Link to={`/product/${product.id}`} className="flex-1">
             <Button
-              variant="outline"
+              variant=""
               size="sm"
-              className="w-full cursour-pointer rounded-lg"
+              className="w-full cursour-pointer rounded-lg border border-primary text-primary hover:bg-primary hover:text-white"
             >
               View Details
             </Button>
@@ -102,7 +102,7 @@ const ProductCard = ({ product, view }) => {
           <Button
             variant="accent"
             size="sm"
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#156874] to-[#0d4a52] hover:from-[#0d4a52] hover:to-[#156874] text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg"
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-primary hover:to-orange-400 text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg"
             onClick={handleAddToCart}
             // disabled={product.availableStock === 0}
           >
@@ -159,9 +159,9 @@ const ProductCard = ({ product, view }) => {
               <div className="flex gap-2 pb-2">
                 <Link to={`/product/${product.id}`}>
                   <Button
-                    variant="outline"
+                    variant=""
                     size="sm"
-                    className="cursor-pointer"
+                    className=" cursour-pointer rounded-lg border border-primary text-primary hover:bg-primary hover:text-white"
                   >
                     View Details
                   </Button>
@@ -169,7 +169,7 @@ const ProductCard = ({ product, view }) => {
                 <Button
                   variant="accent"
                   size="sm"
-                  className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#156874] to-[#0d4a52] hover:from-[#0d4a52] hover:to-[#156874] text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg"
+                  className="flex items-center justify-center gap-2 bg-orange-400 hover:bg-gradient-to-r  hover:from-orange-400 hover:to-[#156874] text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg"
                   onClick={handleAddToCart}
                   disabled={product.availableStock === 0}
                 >

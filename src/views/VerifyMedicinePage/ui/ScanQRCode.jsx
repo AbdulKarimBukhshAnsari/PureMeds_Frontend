@@ -108,7 +108,7 @@ function ScanQRCode({ onVerified, onFake, onBack }) {
         </button>
 
         <div className="text-center mt-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-2xl font-semibold text-primary mb-4">
             Scan QR Code
           </h2>
           <p className="text-gray-600 mb-6">

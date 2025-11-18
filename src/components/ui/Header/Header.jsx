@@ -8,14 +8,14 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Mobile menu
   const [profileOpen, setProfileOpen] = useState(false); // Profile dropdown
   const { cartItems } = useCart();
-  const {isSignedIn} = useAuth()
+  const { isSignedIn } = useAuth();
 
   return (
     <header
       className={`
         fixed top-4 left-1/2 z-50
         -translate-x-1/2
-        backdrop-blur-md bg-white/40
+        backdrop-blur-md bg-white/70
         shadow-lg border border-primary/20
         rounded-2xl
         transition-all duration-300
@@ -24,8 +24,34 @@ function Header() {
     >
       <div className="px-6 py-4 flex justify-between items-center">
         {/* Logo */}
-        <Link to={"/"}>
-          <span className="text-2xl font-bold text-primary">PureMeds</span>
+        <Link
+          to={"/"}
+          className="flex flex-row justify-center items-center gap-1.5"
+        >
+          <svg
+            className="w-6 h-6 text-brand-primary"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2L12 12M12 12L2 7L12 2L22 7L12 12Z"
+              stroke="orange"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M2 17L12 22L22 17M12 12V22"
+              stroke="orange"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span className="text-2xl font-bold bg-gradient-to-r from-orange-300 via-primary to-primary-hover bg-clip-text text-transparent">
+            PureMeds
+          </span>
         </Link>
 
         {/* Desktop Nav */}
@@ -54,7 +80,7 @@ function Header() {
           >
             <ShoppingCart size={22} />
             {cartItems.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-accent text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+              <span className="absolute -top-2 -right-2 bg-orange-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
                 {cartItems.length}
               </span>
             )}
@@ -62,17 +88,17 @@ function Header() {
 
           {/* Profile Dropdown */}
           <div className="relative">
-
             <button
               onClick={() => setProfileOpen(!profileOpen)}
               className="hover:text-primary transition-colors"
             >
-              {isSignedIn ? 
-              <User size={22} className="mt-1" /> : 
-              <Link to={'/sign-in'}>
-              <LogIn size={22} className="mt-1"/> 
-              </Link>}
-              
+              {isSignedIn ? (
+                <User size={22} className="mt-1" />
+              ) : (
+                <Link to={"/sign-in"}>
+                  <LogIn size={22} className="mt-1" />
+                </Link>
+              )}
             </button>
 
             {profileOpen && isSignedIn && (
@@ -95,13 +121,13 @@ function Header() {
                   Complaints
                 </Link>
                 <Link to={"/dashboard/user-profile"}>
-                <div
-                  className="block px-4 py-2 text-sm hover:bg-primary/10 cursor-pointer transition-colors"
-                  onClick={() => setProfileOpen(false)}
+                  <div
+                    className="block px-4 py-2 text-sm hover:bg-primary/10 cursor-pointer transition-colors"
+                    onClick={() => setProfileOpen(false)}
                   >
-                  Profile
-                </div>
-                  </Link>
+                    Profile
+                  </div>
+                </Link>
               </div>
             )}
           </div>

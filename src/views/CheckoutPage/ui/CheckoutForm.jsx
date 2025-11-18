@@ -145,7 +145,7 @@ function CheckoutForm({ cartItems, onShowPayment }) {
       <Button
         variant="primary"
         type="submit"
-        className="w-full"
+        className="w-full bg-gradient-to-r from-orange-400 to-orange-500 hover:from-primary hover:to-orange-400"
         disabled={isSubmitting}
       >
         {isSubmitting ? "Processing..." : "Proceed to Payment"}

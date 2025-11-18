@@ -4,6 +4,7 @@ import ScanQRCode from "./ui/ScanQRCode";
 import UploadQRCode from "./ui/UploadQRCode";
 import VerificationResults from "./ui/VerificationResults";
 import { motion, AnimatePresence } from "framer-motion";
+import { FadeInLeft } from "../../components/ui/Animation/ScrollAnimation";
 
 
 // BREAK INTO COMPONENTS - hehe
@@ -14,25 +15,14 @@ const list = ["#fff", "#156874", "#000" ]
   return (
     <div className="bg-background min-h-screen">
       <div className="container mx-auto px-4 py-32">
-        <AnimatePresence mode="wait">
-          {!verificationMethod && !verificationResult && (
-            <motion.div
-              key="intro"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
-            >
-              <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+        
+              <FadeInLeft>
+
+              <h1 className="text-5xl font-bold text-orange-400 mb-10 p-4 text-center">
                 Verify Your Medicine
               </h1>
-              <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
-                Ensure your medicine is authentic by scanning the QR code on the
-                packaging or uploading an image of the QR code.
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              </FadeInLeft>
+            
 
         {/* Method selection cards */}
         {!verificationMethod && !verificationResult && (

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Button from "../../../components/ui/Buttons/Button";
 import { FadeInWhenVisible } from "../../../components/ui/Animation/ScrollAnimation";
 import { SECTION_TITLES } from "../../../constants/home.constants";
+import  img  from "../../../assets/bg19.png";
 
 function CTASection() {
   return (
@@ -12,7 +13,7 @@ function CTASection() {
         <FadeInWhenVisible>
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-800">
-              {SECTION_TITLES.cta.title}
+              Ready to Experience <span className="font-bold bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent">Authentic Healthcare?</span>
             </h2>
             <p className="text-gray-600 mb-6">
               {SECTION_TITLES.cta.description}
@@ -26,7 +27,7 @@ function CTASection() {
                 <Button
                   variant="primary"
                   size="lg"
-                  className="bg-gradient-to-r from-[#156874] to-[#0d4a52] hover:from-[#0d4a52] hover:to-[#156874] text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg px-6 py-3 font-semibold"
+                  className="bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg px-6 py-3 font-semibold"
                 >
                   {SECTION_TITLES.cta.buttonText}
                   <ArrowRight size={18} className="ml-2 inline" />

@@ -196,7 +196,7 @@ function ComplaintForm({ onSubmitForm }) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="bg-primary hover:bg-primary-hover text-white px-6 py-3 rounded-lg font-medium transition disabled:opacity-50"
+            className="bg-gradient-to-r from-orange-400 to-orange-500 hover:from-primary hover:to-orange-400 text-white px-6 py-3 rounded-lg font-medium transition disabled:opacity-50"
           >
             {isSubmitting ? "Submitting..." : "Submit Complaint"}
           </button>

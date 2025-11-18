@@ -40,7 +40,6 @@ function Home() {
   return (
     <div>
       <HeroSection />
-      <FeaturesSection />
       <BlockchainSection />
       <StatsSection />
       <FeaturedProducts products={featuredProducts} loading={featuredLoading} />

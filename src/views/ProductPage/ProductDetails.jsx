@@ -226,7 +226,7 @@ const ProductDetail = () => {
                   <Button
                     variant="primary"
                     size="md"
-                    className="flex items-center justify-center gap-2 px-6 cursor-pointer"
+                    className="flex items-center justify-center gap-2 px-4  cursor-pointer"
                     onClick={handleAddToCart}
                   >
                     <ShoppingCart size={20} />

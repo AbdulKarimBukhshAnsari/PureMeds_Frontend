@@ -103,7 +103,7 @@ export const SECTION_TITLES = {
   featured: {
     badge: "Our Products",
     title: "Featured Medicines",
-    subtitle: "Browse our verified medicine collection",
+    subtitle: "Browse our verified medicine collection for your daily health needs",
     viewAllText: "View All",
   },
   verification: {

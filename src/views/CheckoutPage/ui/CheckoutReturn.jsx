@@ -255,34 +255,34 @@ const CheckoutReturn = () => {
   return (
     <div className="bg-background min-h-screen py-32">
       <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-sm p-8 text-center">
+        <div className="max-w-full mx-auto bg-white rounded-lg shadow-sm p-8 text-center">
           {/* Icon Section */}
           <div
             className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 ${
-              status == "paid" ? "bg-green-100" : "bg-red-100"
+              status == "paid" ? "bg-orange-100" : "bg-red-100"
             }`}
           >
             {status == "paid" ? (
-              <CheckCircle className="h-8 w-8 text-green-500" />
+              <CheckCircle className="h-8 w-8 text-orange-400" />
             ) : (
               <XCircle className="h-8 w-8 text-red-500" />
             )}
           </div>
 
           {/* Title */}
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">
+          <span className="text-3xl font-bold bg-primary bg-clip-text text-transparent">
             {status == "paid" ? "Order Placed Successfully!" : "Order Could Not Be Placed"}
-          </h1>
+          </span>
 
           {/* Description */}
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mt-4">
             {status == "paid"
               ? "Thank you for your order. We've received your request and will process it shortly."
               : "We encountered an issue while processing your order. Please check your payment details or try again in a few moments."}
           </p>
 
           {/* Order Info */}
-          <div className="bg-gray-50 p-4 rounded-md mb-6">
+          <div className=" p-4 mt-3 rounded-md mb-6">
             <p className="text-sm text-gray-600 mb-1">
               {status == "paid" ? "Order ID:" : "Reference ID (if available):"}
             </p>
@@ -296,18 +296,13 @@ const CheckoutReturn = () => {
           </div>
 
           {/* Additional Message */}
-          <p className="text-gray-600 mb-8">
-            {status == "paid"
-              ? "A confirmation email has been sent to your email address."
-              : "If the payment has been deducted, don’t worry — our team will verify and update your order status shortly."}
-          </p>
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {status == "paid" ? (
               <>
                 <Link to="/dashboard/orders">
-                  <Button variant="primary">View Order Status</Button>
+                  <Button variant="" className="bg-orange-400 text-white cursor-pointer">View Order Status</Button>
                 </Link>
                 <Link to="/">
                   <Button variant="outline">Continue Shopping</Button>

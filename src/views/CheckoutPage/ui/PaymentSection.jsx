@@ -9,6 +9,8 @@ import { createOrder } from "../../../apis/order.api";
 import { createPayment } from "../../../apis/payment.api";
 import { useToast } from "../../../hooks/Toast/useToast";
 import ToastNotification from "../../../components/ui/Alert/ToastNotification";
+import { FadeInLeft } from "../../../components/ui/Animation/ScrollAnimation";
+import { Banknote, Coins, CreditCard } from "lucide-react";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -222,65 +224,56 @@ const PaymentSection = () => {
   // after Stripe redirects back with session_id
 
   return (
-    <div className="flex justify-center py-20">
+    <div className="container justify-center mx-auto px-4 py-10">
       {/* Buttons only visible when no payment method is chosen */}
       {!paymentMethod && (
-        <>
-          <div className="flex justify-center ">
-            <div className="bg-white rounded-2xl shadow-md p-10 w-full sm:w-[600px] md:w-[750px] lg:w-[900px]">
-              <h2 className="text-lg font-semibold text-gray-800 mb-6 uppercase tracking-wide text-center">
-                Select a Payment Option
-              </h2>
+        <div className="max-w-3xl mx-auto">
+          <FadeInLeft>
+            <h1 className="text-5xl font-bold text-orange-400 mb-10 p-4 text-center">
+              Select a Payment Option
+            </h1>
+          </FadeInLeft>
 
-              <div className="space-y-3">
-                {/* Pay with Card */}
-                <button
-                  onClick={handleCardPayment}
-                  disabled={isLoading}
-                  className={`flex justify-between items-center w-full p-5 rounded-xl border transition-all duration-200 ${
-                    paymentMethod === "card"
-                      ? "bg-primary text-white shadow-lg border-primary ring-4 ring-primary/30"
-                      : "bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-800"
-                  } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
-                >
-                  <span className="text-gray-800 font-medium">
-                    {isLoading ? "Processing..." : "Pay with Card"}
-                  </span>
-                  {!isLoading && (
-                    <span className="text-gray-400 text-xl">›</span>
-                  )}
-                </button>
-
-                {/* Cash on Delivery */}
-                <button
-                  onClick={handleCOD}
-                  disabled={isProcessingOrder}
-                  className={`flex justify-between items-center w-full p-5 rounded-xl border transition-all duration-200 ${
-                    paymentMethod === "cod"
-                      ? "bg-primary text-white shadow-lg border-primary ring-4 ring-primary/30"
-                      : "bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-800"
-                  } ${
-                    isProcessingOrder ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                >
-                  <span className="text-gray-800 font-medium">
-                    {isProcessingOrder
-                      ? "Processing Order..."
-                      : "Cash on Delivery"}
-                  </span>
-                  {!isProcessingOrder && (
-                    <span className="text-gray-400 text-xl">›</span>
-                  )}
-                </button>
+          {/* Grid container for the two cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Pay with Card */}
+            <div
+              className="bg-white p-8 rounded-lg shadow-sm border-2 border-transparent hover:border-primary transition-all cursor-pointer flex flex-col items-center text-center"
+              onClick={handleCardPayment}
+              disabled={isLoading}
+            >
+              <div className="bg-orange-500/20 bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                <Banknote className="text-orange-400" />
               </div>
+
+              <span className="text-xl font-semibold text-primary">
+                {isLoading ? "Processing..." : "Pay with Card"}
+              </span>
+              
+            </div>
+
+            {/* Cash on Delivery */}
+            <div
+              className="bg-white p-8 rounded-lg shadow-sm border-2 border-transparent hover:border-primary transition-all cursor-pointer flex flex-col items-center text-center"
+              onClick={handleCOD}
+              disabled={isProcessingOrder}
+            >
+              <div className="bg-orange-500/20 bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                <CreditCard className="text-orange-400" />
+              </div>
+
+              <span className="text-xl font-semibold text-primary">
+                {isProcessingOrder ? "Processing Order..." : "Cash on Delivery"}
+              </span>
+              
             </div>
           </div>
-        </>
+        </div>
       )}
 
       {/* ✅ Show embedded checkout only after user selects Card */}
       {paymentMethod === "card" && clientSecret && (
-        <div className="w-full sm:w-[600px] md:w-[750px] lg:w-[900px] bg-transparent">
+        <div className=" mx-auto w-full sm:w-[600px] md:w-[750px] lg:w-[900px] bg-none">
           <StripeCheckout clientSecret={clientSecret} />
         </div>
       )}
