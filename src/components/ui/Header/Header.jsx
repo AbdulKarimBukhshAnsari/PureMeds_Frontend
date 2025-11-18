@@ -56,15 +56,15 @@ function Header() {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-8 text-primary/90">
-          <Link to={"/"} className="hover:text-primary-hover">
+          <Link to={"/"} className="hover:text-orange-400">
             Home
           </Link>
-          <Link to={"categories"} className="hover:text-primary-hover">
+          <Link to={"categories"} className="hover:text-orange-400">
             Categories
           </Link>
           <Link
             to={"verify"}
-            className="flex items-center gap-1 hover:text-primary-hover"
+            className="flex items-center gap-1 hover:text-orange-400"
           >
             <QrCode size={18} />
             <span>Verify Medicine</span>
@@ -90,7 +90,7 @@ function Header() {
           <div className="relative">
             <button
               onClick={() => setProfileOpen(!profileOpen)}
-              className="hover:text-primary transition-colors"
+              className="hover:text-orange-400 cursor-pointer transition-colors"
             >
               {isSignedIn ? (
                 <User size={22} className="mt-1" />

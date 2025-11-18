@@ -7,17 +7,17 @@ function CartEmpty() {
     <div>
       <div className="bg-white rounded-lg shadow-md p-12 text-center">
         <div className="flex justify-center mb-4">
-          <ShoppingBag size={64} className="text-primary/30 " />
+          <ShoppingBag size={64} className="text-orange-400 " />
         </div>
-        <h2 className="text-2xl font-semibold text-support mb-4">
-          Your cart is empty
+        <h2 className="text-3xl text-primary font-semibold text-support mb-4">
+          Your Cart is Empty
         </h2>
-        <p className="text-gray-600 mb-8">
+        <p className="text-gray-600 text-lg mb-8">
           Looks like you haven't added any medicines to your cart yet.
         </p>
         <Link
           to="/categories"
-          className="inline-block bg-primary text-white px-8 py-3 rounded-md font-medium hover:bg-primary/90 transition-colors"
+          className="inline-block bg-orange-400 hover:bg-gradient-to-r hover:from-primary hover:to-orange-400 text-white px-8 py-3 rounded-md font-medium hover:bg-primary/90 transition-colors"
         >
           Start Shopping
         </Link>
