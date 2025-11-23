@@ -19,7 +19,7 @@ function ScanQRCode({ onVerified, onFake, onBack }) {
       html5QrCodeRef.current = html5QrCode;
 
       await html5QrCode.start(
-        { deviceId: { exact: cameraId } },
+        {  facingMode: { exact: "environment"}  },
         {
           fps: 10, // scan 10 frames per second
           qrbox: { width: 250, height: 250 }, // bounding box size

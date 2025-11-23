@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { useAuth } from "@clerk/clerk-react";
 import StripeCheckout from "./StripeCheckout";
 import { useCart } from "../../../context/Cart/CartContext";
@@ -20,7 +21,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 3. remove pay with link 
 4. show checkout details in order confirmation page 
  */
-const PaymentSection = () => {
+const PaymentSection = ({onBack}) => {
   const navigate = useNavigate();
   const { getToken } = useAuth();
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -28,7 +29,7 @@ const PaymentSection = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isProcessingOrder, setIsProcessingOrder] = useState(false);
   const { cartItems, getCartItems, clearCart } = useCart();
-  const { checkoutDetails } = useCheckout();
+  const { checkoutDetails, setCheckoutDetails } = useCheckout();
   const [toast, showSuccess, showError, hideToast] = useToast();
 
   // to convert whole product into acceptable format by the payment gateway
@@ -113,6 +114,9 @@ const PaymentSection = () => {
 
       // Clear cart
       clearCart();
+
+      // set Checkout details to null 
+      setCheckoutDetails(null);
 
       // Navigate to success page
       navigate(`/checkout/return?order_id=${order.orderId}&status=success`);
@@ -220,12 +224,24 @@ const PaymentSection = () => {
     }
   };
 
+
   // Note: For Stripe card payments, order creation happens in CheckoutReturn
   // after Stripe redirects back with session_id
 
   return (
     <div className="container justify-center mx-auto px-4 py-10">
       {/* Buttons only visible when no payment method is chosen */}
+      {/* Back Button */}
+      <div className="mb-6">
+        <button
+          onClick={onBack}
+          className="flex items-center text-gray-500 hover:text-primary transition cursor-pointer"
+        >
+          <ArrowLeft className="h-5 w-5 mr-2" />
+          <span className="font-medium">Back to Checkout</span>
+        </button>
+      </div>
+
       {!paymentMethod && (
         <div className="max-w-3xl mx-auto">
           <FadeInLeft>
@@ -249,7 +265,6 @@ const PaymentSection = () => {
               <span className="text-xl font-semibold text-primary">
                 {isLoading ? "Processing..." : "Pay with Card"}
               </span>
-              
             </div>
 
             {/* Cash on Delivery */}
@@ -265,7 +280,6 @@ const PaymentSection = () => {
               <span className="text-xl font-semibold text-primary">
                 {isProcessingOrder ? "Processing Order..." : "Cash on Delivery"}
               </span>
-              
             </div>
           </div>
         </div>

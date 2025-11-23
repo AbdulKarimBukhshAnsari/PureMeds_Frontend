@@ -60,7 +60,7 @@ function Checkout() {
           </>
         ) : (
           <>
-            <PaymentSection />
+            <PaymentSection onBack={() => setShowPayment(false)}/>
           </>
         )}
       </div>
