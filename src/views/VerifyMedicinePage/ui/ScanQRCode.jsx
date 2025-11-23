@@ -84,7 +84,7 @@ function ScanQRCode({ onBack }) {
       html5QrCodeRef.current = html5QrCode;
 
       await html5QrCode.start(
-        { deviceId: { exact: cameraId } },
+        {  facingMode: { exact: "environment"}  },
         {
           fps: 10,
           qrbox: { width: 250, height: 250 },

@@ -149,7 +149,13 @@ const ProductCard = ({ product, view }) => {
                 {product.purpose}
               </p>
               <div className="mb-3">
-                <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs mr-2">
+                <span className={`text-sm font-medium ${
+              product.availableStock > 10
+                ? "text-green-600"
+                : product.availableStock > 0
+                ? "text-orange-600"
+                : "text-red-600"
+            }`}>
                   In Stock: {product.availableStock}
                 </span>
               </div>
