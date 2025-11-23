@@ -42,7 +42,7 @@ function VerificationBanner() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <button className="bg-orange-500 text-white hover:bg-gradient-to-r hover:from-primary hover:to-orange-400 transition-all duration-300 rounded-xl px-8 py-3 flex items-center gap-2 font-semibold shadow-md">
+                    <button className="cursor-pointer bg-orange-500 text-white hover:bg-gradient-to-r hover:from-primary hover:to-orange-400 transition-all duration-300 rounded-xl px-8 py-3 flex items-center gap-2 font-semibold shadow-md">
                       <QrCode size={20} />
                       {SECTION_TITLES.verification.buttonText}
                     </button>

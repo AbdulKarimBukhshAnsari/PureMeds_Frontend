@@ -133,7 +133,7 @@ const Categories = () => {
             <div className="flex items-center gap-3">
               <div className="flex items-center border border-gray-400 rounded-md overflow-hidden">
                 <button
-                  className={`p-2 ${
+                  className={`p-2 cursor-pointer ${
                     viewMode === "grid"
                       ? "bg-orange-400 text-white"
                       : "bg-orange-50/50 text-orange-400"
@@ -144,7 +144,7 @@ const Categories = () => {
                   <Grid size={18} />
                 </button>
                 <button
-                  className={`p-2 ${
+                  className={`p-2 cursor-pointer ${
                     viewMode === "list"
                       ? "bg-orange-400 text-white"
                       : "bg-orange-50/50 text-orange-400"
@@ -165,7 +165,7 @@ const Categories = () => {
           {scrollPosition > 0 && (
             <button
               onClick={scrollLeft}
-              className="absolute -left-4 z-10 bg-primary/90 text-orange-400 hover:bg-teal-150 rounded-full shadow-md p-2"
+              className="cursor-pointer absolute -left-4 z-10 bg-primary/90 text-orange-400 hover:bg-teal-150 rounded-full shadow-md p-2"
               style={{ transform: "translateY(-50%)", top: "50%" }}
             >
               <ChevronLeft className="h-5 w-5" strokeWidth={4} />
@@ -180,10 +180,10 @@ const Categories = () => {
             {categories.map((category) => (
               <button
                 key={category.id}
-                className={`px-4 py-2 border-gray-400 rounded-full whitespace-nowrap transition ${
+                className={`cursor-pointer px-4 py-2 border-gray-400 rounded-full whitespace-nowrap transition ${
                   activeCategory === category.id
                     ? "bg-gradient-to-r from-primary to-orange-400 text-white"
-                    : "bg-orange-50/50 border hover:bg-gray-100"
+                    : "bg-orange-50/50 border hover:bg-orange-100/50"
                 }`}
                 onClick={() => setActiveCategory(category.id)}
               >
@@ -196,7 +196,7 @@ const Categories = () => {
           {scrollPosition < maxScroll && (
             <button
               onClick={scrollRight}
-              className="absolute -right-4 z-10 bg-primary/90 text-orange-400 hover:bg-teal-150 rounded-full shadow-md p-2"
+              className="cursor-pointer absolute -right-4 z-10 bg-primary/90 text-orange-400 hover:bg-teal-150 rounded-full shadow-md p-2"
               style={{ transform: "translateY(-50%)", top: "50%" }}
             >
               <ChevronRight className="h-5 w-5" strokeWidth={4} />

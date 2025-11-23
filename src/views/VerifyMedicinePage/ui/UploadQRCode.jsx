@@ -3,7 +3,7 @@ import { Html5Qrcode } from "html5-qrcode";
 import Button from "../../../components/ui/Buttons/Button";
 import { ArrowLeft, Upload } from "lucide-react";
 import { SupplyChain } from "../../../utils/mockData";
-import ToastNotification, {  } from "../../../components/ui/Alert/ToastNotification";
+import ToastNotification from "../../../components/ui/Alert/ToastNotification";
 import { useToast } from "../../../hooks/Toast/useToast";
 
 function UploadQRCode({ onFake, onVerified, onBack }) {
@@ -50,7 +50,7 @@ function UploadQRCode({ onFake, onVerified, onBack }) {
       // Simulated verification
       if (decodedObj.batchId === SupplyChain[0].batchId) {
         onVerified();
-        showSuccess("QR Code verified successfully!")
+        showSuccess("QR Code verified successfully!");
       } else {
         onFake();
         showError("This QR code does not match the supply chain record.");
@@ -60,7 +60,9 @@ function UploadQRCode({ onFake, onVerified, onBack }) {
       html5QrCode.clear();
     } catch (err) {
       console.error("QR scan error:", err);
-      showError("The uploaded image is not a valid QR code. Add another image.");
+      showError(
+        "The uploaded image is not a valid QR code. Add another image."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -71,7 +73,7 @@ function UploadQRCode({ onFake, onVerified, onBack }) {
       {/* Back Button (inside card, top-left) */}
       <button
         onClick={onBack}
-        className="absolute top-4 left-4 flex items-center text-gray-600 hover:text-primary transition"
+        className="cursor-pointer absolute top-4 left-4 flex items-center text-gray-600 hover:text-primary transition"
         aria-label="Go back"
       >
         <ArrowLeft className="h-5 w-5 mr-1" />
