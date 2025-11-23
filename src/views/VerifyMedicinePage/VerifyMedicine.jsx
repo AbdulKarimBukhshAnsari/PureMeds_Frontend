@@ -35,16 +35,13 @@ const list = ["#fff", "#156874", "#000" ]
         {verificationMethod === "scan" && !verificationResult && (
           <ScanQRCode
             onBack={() => setVerificationMethod(null)}
-            onFake={() => setVerificationResult("fake")}
-            onVerified={() => setVerificationResult("verified")}
           />
         )}
 
+        {/* Upload QR Code */}
         {verificationMethod === "upload" && !verificationResult && (
           <UploadQRCode
             onBack={() => setVerificationMethod(null)}
-            onFake={() => setVerificationResult("fake")}
-            onVerified={() => setVerificationResult("verified")}
           />
         )}
 

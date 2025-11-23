@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -9,7 +9,7 @@ import { useCheckout } from "../../../context/Checkout/CheckoutDetailsContext";
 import CustomDropdown from "../../../components/ui/DropDownMenu/CustomDropdown";
 
 function CheckoutForm({ cartItems, onShowPayment }) {
-  const { setCheckoutDetails } = useCheckout();
+  const { setCheckoutDetails, checkoutDetails } = useCheckout();
   const schema = Yup.object({
     // personal
     firstName: Yup.string().required("First name is required"),
@@ -28,7 +28,7 @@ function CheckoutForm({ cartItems, onShowPayment }) {
       .required("ZIP code is required"),
     country: Yup.string().required("Country is required"),
   });
-
+  console.log(checkoutDetails)
   const {
     register,
     handleSubmit,
@@ -40,11 +40,19 @@ function CheckoutForm({ cartItems, onShowPayment }) {
     resolver: yupResolver(schema),
   });
 
+    useEffect(() => {
+  if (checkoutDetails?.customerInfo) {
+    const info = checkoutDetails.customerInfo;
+    Object.keys(info).forEach((key) => {
+      setValue(key, info[key]);
+    });
+  }
+}, [checkoutDetails, setValue]);
+
   const onSubmit = async (data) => {
     setCheckoutDetails({
       customerInfo: data,
     });
-    console.log("Order Data:", { ...data, cartItems });
     onShowPayment(true);
   };
   return (

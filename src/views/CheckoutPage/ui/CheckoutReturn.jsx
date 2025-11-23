@@ -24,8 +24,8 @@ const CheckoutReturn = () => {
   const [orderId, setOrderId] = useState(orderIdParam || null);
   const hasProcessedRef = useRef(false); // Use ref to prevent duplicate processing
   const { cartItems, clearCart } = useCart();
-  const { checkoutDetails } = useCheckout();
-  const [toast, showSuccess, showError, hideToast] = useToast();
+  const { checkoutDetails, setCheckoutDetails } = useCheckout();
+     const [toast, showSuccess, showError, hideToast] = useToast();
 
   useEffect(() => {
     // Prevent duplicate processing
@@ -191,6 +191,7 @@ const CheckoutReturn = () => {
                 );
 
                 clearCart();
+                setCheckoutDetails(null);
                 sessionStorage.removeItem("puremeds_checkout_details");
                 sessionStorage.removeItem("puremeds_cart_items");
 
