@@ -1,7 +1,6 @@
 import React from "react";
 import { useAuth } from "@clerk/clerk-react";
 import HeroSection from "./components/HeroSection";
-import FeaturesSection from "./components/FeaturesSection";
 import BlockchainSection from "./components/BlockchainSection";
 import StatsSection from "./components/StatsSection";
 import FeaturedProducts from "./components/FeaturedProducts";
