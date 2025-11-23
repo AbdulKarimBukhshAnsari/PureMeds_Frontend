@@ -94,7 +94,7 @@ const ProductCard = ({ product, view }) => {
             <Button
               variant=""
               size="sm"
-              className="w-full cursour-pointer rounded-lg border border-primary text-primary hover:bg-primary hover:text-white"
+              className="w-full cursor-pointer rounded-lg border border-primary text-primary hover:bg-primary hover:text-white"
             >
               View Details
             </Button>
@@ -102,7 +102,7 @@ const ProductCard = ({ product, view }) => {
           <Button
             variant="accent"
             size="sm"
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-primary hover:to-orange-400 text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg"
+            className="cursor-pointer flex items-center justify-center gap-2 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-primary hover:to-orange-400 text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg"
             onClick={handleAddToCart}
             // disabled={product.availableStock === 0}
           >
@@ -128,13 +128,16 @@ const ProductCard = ({ product, view }) => {
         <div className="flex flex-col sm:flex-row">
           <div className="sm:w-1/4">
             <Link to={`/product/${product.id}`}>
-              <img
-                src={product.productImage}
-                alt={product.productName}
-                className="w-full h-48 sm:h-full object-cover"
-              />
+              <div className="w-full aspect-square overflow-hidden rounded-lg">
+                <img
+                  src={product.productImage}
+                  alt={product.productName}
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </Link>
           </div>
+
           <div className="p-4 sm:w-3/4 flex flex-col">
             <div className="flex-grow">
               <h3 className="font-semibold text-lg mb-1 text-[#2E2E2E] hover:text-primary-hover">
@@ -167,7 +170,7 @@ const ProductCard = ({ product, view }) => {
                   <Button
                     variant=""
                     size="sm"
-                    className=" cursour-pointer rounded-lg border border-primary text-primary hover:bg-primary hover:text-white"
+                    className="cursor-pointer rounded-lg border border-primary text-primary hover:bg-primary hover:text-white"
                   >
                     View Details
                   </Button>
@@ -175,7 +178,7 @@ const ProductCard = ({ product, view }) => {
                 <Button
                   variant="accent"
                   size="sm"
-                  className="flex items-center justify-center gap-2 bg-orange-400 hover:bg-gradient-to-r  hover:from-orange-400 hover:to-[#156874] text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg"
+                  className="cursor-pointer flex items-center justify-center gap-2 bg-orange-400 hover:bg-gradient-to-r  hover:from-orange-400 hover:to-[#156874] text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg"
                   onClick={handleAddToCart}
                   disabled={product.availableStock === 0}
                 >

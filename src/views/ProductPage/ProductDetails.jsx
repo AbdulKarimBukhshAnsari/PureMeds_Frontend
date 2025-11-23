@@ -12,6 +12,7 @@ import {
 } from "../../components/ui/Animation/ScrollAnimation";
 import { useToast } from "../../hooks/Toast/useToast";
 import ToastNotification from "../../components/ui/Alert/ToastNotification";
+import Loading from "../../components/ui/Loader/Loading";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -126,6 +127,14 @@ const ProductDetail = () => {
     );
   }
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <Loading />
+      </div>
+    );
+  }
+
   return (
     <div className="bg-background min-h-screen">
       <div className="container mx-auto px-4 pt-24">
@@ -138,7 +147,7 @@ const ProductDetail = () => {
           <FadeInRight>
             <Button
               variant=""
-              className="flex border border-primary text-primary hover:bg-gradient-to-r hover:from-primary hover:to-orange-400 hover:text-white hover:border-background items-center gap-2"
+              className="cursor-pointer flex border border-primary text-primary hover:bg-gradient-to-r hover:from-primary hover:to-orange-400 hover:text-white hover:border-background items-center gap-2"
               onClick={() => window.history.back()}
             >
               <ArrowLeft size={18} />

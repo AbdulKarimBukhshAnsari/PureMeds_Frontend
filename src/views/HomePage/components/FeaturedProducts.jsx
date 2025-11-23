@@ -60,7 +60,7 @@ function FeaturedProducts({ products = [], loading = false }) {
                   >
                     <Button
                       variant=""
-                      className="bg-gradient-to-r from-orange-400 to-orange-500 hover:from-primary hover:to-orange-400 text-white transition-all duration-300 rounded-xl px-6 py-3 flex items-center gap-2"
+                      className="cursor-pointer bg-gradient-to-r from-orange-400 to-orange-500 hover:from-primary hover:to-orange-400 text-white transition-all duration-300 rounded-xl px-6 py-3 flex items-center gap-2"
                     >
                       {SECTION_TITLES.featured.viewAllText}
                       <ArrowRight size={18} />

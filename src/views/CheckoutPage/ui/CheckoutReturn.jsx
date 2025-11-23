@@ -64,62 +64,71 @@ const CheckoutReturn = () => {
         let storedCartItems = null;
 
         try {
-          const storedCheckout = sessionStorage.getItem("puremeds_checkout_details");
+          const storedCheckout = sessionStorage.getItem(
+            "puremeds_checkout_details"
+          );
           const storedCart = sessionStorage.getItem("puremeds_cart_items");
-          
+
           if (storedCheckout) {
             storedCheckoutDetails = JSON.parse(storedCheckout);
-            console.log("✅ Loaded checkout details from sessionStorage:", storedCheckoutDetails);
+            console.log(
+              "✅ Loaded checkout details from sessionStorage:",
+              storedCheckoutDetails
+            );
           } else {
             console.warn("⚠️ No checkout details found in sessionStorage");
           }
-          
+
           if (storedCart) {
             storedCartItems = JSON.parse(storedCart);
-          } 
+          }
         } catch (storageError) {
           console.error("❌ Error loading from sessionStorage:", storageError);
         }
 
         // Use sessionStorage data as primary source, fallback to context
         const finalCheckoutDetails = storedCheckoutDetails || checkoutDetails;
-        const finalCartItems = (storedCartItems && storedCartItems.length > 0) ? storedCartItems : cartItems;
+        const finalCartItems =
+          storedCartItems && storedCartItems.length > 0
+            ? storedCartItems
+            : cartItems;
 
         const token = await getToken({ template: "puremeds" });
         if (!token) {
           throw new Error("Failed to get authentication token");
         }
 
-      
         const sessionResponse = await getSessionStatus(sessionId, token);
         const sessionData = sessionResponse?.data || sessionResponse;
 
         if (sessionData.paymentStatus === "paid") {
           console.log("Payment status is PAID, creating order...");
-          
+
           console.log("Final checkout details:", finalCheckoutDetails);
           console.log("Final cart items:", finalCartItems);
           console.log("Final cart items length:", finalCartItems?.length);
 
           // Validate data structure
-          const hasValidCheckoutDetails = finalCheckoutDetails?.customerInfo && 
-            typeof finalCheckoutDetails.customerInfo === 'object' &&
+          const hasValidCheckoutDetails =
+            finalCheckoutDetails?.customerInfo &&
+            typeof finalCheckoutDetails.customerInfo === "object" &&
             finalCheckoutDetails.customerInfo.firstName &&
             finalCheckoutDetails.customerInfo.email;
-          
-          const hasValidCartItems = Array.isArray(finalCartItems) && finalCartItems.length > 0;
+
+          const hasValidCartItems =
+            Array.isArray(finalCartItems) && finalCartItems.length > 0;
 
           console.log("Data validation:", {
             hasValidCheckoutDetails,
             hasValidCartItems,
             checkoutDetailsStructure: finalCheckoutDetails,
-            cartItemsStructure: finalCartItems
+            cartItemsStructure: finalCartItems,
           });
 
           // Check if order already exists for this session (prevent duplicates)
           const existingOrderKey = `order_created_${sessionId}`;
           const orderAlreadyCreated = sessionStorage.getItem(existingOrderKey);
-          
+
           if (orderAlreadyCreated) {
             console.log("Order already created for this session, skipping...");
             const existingOrder = JSON.parse(orderAlreadyCreated);
@@ -131,7 +140,10 @@ const CheckoutReturn = () => {
           // Create order and payment
           if (hasValidCheckoutDetails && hasValidCartItems) {
             try {
-              const subtotal = finalCartItems.reduce((t, i) => t + i.price * (i.quantity || 1), 0);
+              const subtotal = finalCartItems.reduce(
+                (t, i) => t + i.price * (i.quantity || 1),
+                0
+              );
               const shipping = 200;
               const total = subtotal + shipping;
 
@@ -153,7 +165,7 @@ const CheckoutReturn = () => {
               console.log("Creating order with data:", orderData);
               const orderResponse = await createOrder(orderData, token);
               console.log("Order response:", orderResponse);
-              
+
               const order = orderResponse?.data || orderResponse;
               console.log("Parsed order:", order);
 
@@ -171,38 +183,50 @@ const CheckoutReturn = () => {
                 console.log("Creating payment with data:", paymentData);
                 await createPayment(paymentData, token);
                 console.log("Payment created successfully!");
-                
+
                 // Mark order as created to prevent duplicates
-                sessionStorage.setItem(existingOrderKey, JSON.stringify({ orderId: order.orderId, _id: order._id }));
-                
+                sessionStorage.setItem(
+                  existingOrderKey,
+                  JSON.stringify({ orderId: order.orderId, _id: order._id })
+                );
+
                 clearCart();
                 setCheckoutDetails(null);
                 sessionStorage.removeItem("puremeds_checkout_details");
                 sessionStorage.removeItem("puremeds_cart_items");
-                
+
                 setOrderId(order.orderId);
                 setStatus("paid");
                 console.log("Order ID set:", order.orderId);
               } else {
-                console.error("Order creation failed - invalid response:", orderResponse);
+                console.error(
+                  "Order creation failed - invalid response:",
+                  orderResponse
+                );
                 throw new Error("Failed to create order - invalid response");
               }
             } catch (orderError) {
               console.error("Error creating order:", orderError);
               console.error("Order error response:", orderError.response);
-              
+
               // Better error message extraction
               let errorMsg = "Failed to create order";
               if (orderError.response?.data) {
                 const errorData = orderError.response.data;
-                errorMsg = errorData.message || errorData.data?.message || errorData.error || errorMsg;
+                errorMsg =
+                  errorData.message ||
+                  errorData.data?.message ||
+                  errorData.error ||
+                  errorMsg;
               } else if (orderError.message) {
                 errorMsg = orderError.message;
               }
-              
+
               console.error("Order error message:", errorMsg);
               setStatus("error");
-              showError(`Payment successful but order creation failed.\n\nError: ${errorMsg}\n\nPlease contact support with session ID: ${sessionId}`);
+              showError(
+                `Payment successful but order creation failed.\n\nError: ${errorMsg}\n\nPlease contact support with session ID: ${sessionId}`
+              );
             }
           } else {
             console.error("❌ Missing or invalid data for order creation:", {
@@ -210,13 +234,28 @@ const CheckoutReturn = () => {
               hasValidCartItems,
               checkoutDetails: finalCheckoutDetails,
               cartItems: finalCartItems,
-              checkoutDetailsKeys: finalCheckoutDetails ? Object.keys(finalCheckoutDetails) : null,
-              customerInfoKeys: finalCheckoutDetails?.customerInfo ? Object.keys(finalCheckoutDetails.customerInfo) : null
+              checkoutDetailsKeys: finalCheckoutDetails
+                ? Object.keys(finalCheckoutDetails)
+                : null,
+              customerInfoKeys: finalCheckoutDetails?.customerInfo
+                ? Object.keys(finalCheckoutDetails.customerInfo)
+                : null,
             });
             setStatus("error");
-            showError(`Payment successful but cannot create order. Missing or invalid data.\n\nCheckout Details: ${hasValidCheckoutDetails ? '✅ Valid' : '❌ Missing/Invalid'}\nCart Items: ${hasValidCartItems ? `✅ Valid (${finalCartItems?.length || 0} items)` : '❌ Missing/Invalid'}\n\nPlease contact support with session ID: ${sessionId}`);
+            showError(
+              `Payment successful but cannot create order. Missing or invalid data.\n\nCheckout Details: ${
+                hasValidCheckoutDetails ? "✅ Valid" : "❌ Missing/Invalid"
+              }\nCart Items: ${
+                hasValidCartItems
+                  ? `✅ Valid (${finalCartItems?.length || 0} items)`
+                  : "❌ Missing/Invalid"
+              }\n\nPlease contact support with session ID: ${sessionId}`
+            );
           }
-        } else if (sessionData.paymentStatus === "unpaid" || sessionData.paymentStatus === "open") {
+        } else if (
+          sessionData.paymentStatus === "unpaid" ||
+          sessionData.paymentStatus === "open"
+        ) {
           console.log("Payment status is UNPAID or OPEN");
           setStatus("unpaid");
         } else {
@@ -226,18 +265,24 @@ const CheckoutReturn = () => {
       } catch (error) {
         console.error("Error in handleStripeReturn:", error);
         console.error("Error details:", error.response);
-        
+
         // Better error message extraction
         let errorMsg = "Unknown error occurred";
         if (error.response?.data) {
           const errorData = error.response.data;
-          errorMsg = errorData.message || errorData.data?.message || errorData.error || errorMsg;
+          errorMsg =
+            errorData.message ||
+            errorData.data?.message ||
+            errorData.error ||
+            errorMsg;
         } else if (error.message) {
           errorMsg = error.message;
         }
-        
+
         setStatus("error");
-        showError(`Error processing payment return.\n\nError: ${errorMsg}\n\nPlease try again or contact support.`);
+        showError(
+          `Error processing payment return.\n\nError: ${errorMsg}\n\nPlease try again or contact support.`
+        );
       }
     };
 
@@ -248,7 +293,7 @@ const CheckoutReturn = () => {
   if (status === "loading") {
     return (
       <div className="bg-background min-h-screen flex flex-col justify-center items-center text-center">
-        <Loading/>
+        <Loading />
       </div>
     );
   }
@@ -258,21 +303,19 @@ const CheckoutReturn = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-full mx-auto bg-white rounded-lg shadow-sm p-8 text-center">
           {/* Icon Section */}
-          <div
-            className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 ${
-              status == "paid" ? "bg-orange-100" : "bg-red-100"
-            }`}
-          >
+          <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 bg-orange-100 text-orange-400">
             {status == "paid" ? (
-              <CheckCircle className="h-8 w-8 text-orange-400" />
+              <CheckCircle className="h-8 w-8" />
             ) : (
-              <XCircle className="h-8 w-8 text-red-500" />
+              <XCircle className="h-8 w-8" />
             )}
           </div>
 
           {/* Title */}
           <span className="text-3xl font-bold bg-primary bg-clip-text text-transparent">
-            {status == "paid" ? "Order Placed Successfully!" : "Order Could Not Be Placed"}
+            {status == "paid"
+              ? "Order Placed Successfully!"
+              : "Order Could Not Be Placed"}
           </span>
 
           {/* Description */}
@@ -285,7 +328,7 @@ const CheckoutReturn = () => {
           {/* Order Info */}
           <div className=" p-4 mt-3 rounded-md mb-6">
             <p className="text-sm text-gray-600 mb-1">
-              {status == "paid" ? "Order ID:" : "Reference ID (if available):"}
+              {status == "paid" ? "Order ID:" : "Reference ID:"}
             </p>
             <p
               className={`text-lg font-semibold ${
@@ -303,19 +346,33 @@ const CheckoutReturn = () => {
             {status == "paid" ? (
               <>
                 <Link to="/dashboard/orders">
-                  <Button variant="" className="bg-orange-400 text-white cursor-pointer">View Order Status</Button>
+                  <Button
+                    variant=""
+                    className="bg-orange-400 text-white cursor-pointer"
+                  >
+                    View Order Status
+                  </Button>
                 </Link>
                 <Link to="/">
-                  <Button variant="outline">Continue Shopping</Button>
+                  <Button variant="outline" className="cursor-pointer ">
+                    Continue Shopping
+                  </Button>
                 </Link>
               </>
             ) : (
               <>
                 <Link to="/support">
-                  <Button variant="primary">Contact Support</Button>
+                  <Button
+                    variant=""
+                    className="cursor-pointer bg-orange-400 text-white"
+                  >
+                    Contact Support
+                  </Button>
                 </Link>
                 <Link to="/checkout">
-                  <Button variant="outline">Try Again</Button>
+                  <Button variant="outline" className="cursor-pointer ">
+                    Try Again
+                  </Button>
                 </Link>
               </>
             )}
@@ -323,12 +380,12 @@ const CheckoutReturn = () => {
         </div>
       </div>
       <ToastNotification
-              isVisible={toast.isVisible}
-              type={toast.type}
-              message={toast.message}
-              duration={toast.duration}
-              onClose={hideToast}
-            />
+        isVisible={toast.isVisible}
+        type={toast.type}
+        message={toast.message}
+        duration={toast.duration}
+        onClose={hideToast}
+      />
     </div>
   );
 };

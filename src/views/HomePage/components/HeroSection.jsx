@@ -6,6 +6,7 @@ import {
 import bgImage from "../../../assets/bg14.png";
 
 import React from "react";
+import { Link } from "react-router-dom";
 
 function HeroSection() {
   return (
@@ -44,7 +45,7 @@ function HeroSection() {
         <FadeInLeft>
           <div>
             <h2 className="text-4xl font-semibold mb-2 text-primary">
-              Authentic Medicines,
+              Authentic Medicines
             </h2>
             <h1 className="text-3xl font-bold leading-tight mb-6 text-orange-400">
               Verified by Blockchain
@@ -56,17 +57,21 @@ function HeroSection() {
             </p>
 
             <div className="flex gap-4">
-              <button className="bg-gradient-to-r from-orange-400 to-orange-500 hover:from-primary hover:to-orange-400 text-white px-6 py-3 rounded-xl font-medium shadow-md">
-                Shop Now
-              </button>
-              <button
-                className="border-2 border-primary text-primary px-6 py-3 rounded-xl font-medium
-  transition-all duration-300
-  hover:text-white
-  hover:bg-gradient-to-r hover:from-primary hover:to-orange-400"
-              >
-                Verify Medicine
-              </button>
+              <Link to={"/categories"}>
+                <button className="cursor-pointer bg-gradient-to-r from-orange-400 to-orange-500 hover:from-primary hover:to-orange-400 text-white px-6 py-3 rounded-xl font-medium shadow-md">
+                  Shop Now
+                </button>
+              </Link>
+              <Link to={"/verify"}>
+                <button
+                  className="cursor-pointer border-2 border-primary text-primary px-6 py-3 rounded-xl font-medium
+                transition-all duration-300
+                hover:text-white
+                hover:bg-gradient-to-r hover:from-primary hover:to-orange-400"
+                >
+                  Verify Medicine
+                </button>
+              </Link>
             </div>
           </div>
         </FadeInLeft>

@@ -34,8 +34,8 @@ function CheckoutForm({ cartItems, onShowPayment }) {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    watch, 
-    setValue, 
+    watch,
+    setValue,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -153,7 +153,7 @@ function CheckoutForm({ cartItems, onShowPayment }) {
       <Button
         variant="primary"
         type="submit"
-        className="w-full bg-gradient-to-r from-orange-400 to-orange-500 hover:from-primary hover:to-orange-400"
+        className="cursor-pointer w-full bg-gradient-to-r from-orange-400 to-orange-500 hover:from-primary hover:to-orange-400"
         disabled={isSubmitting}
       >
         {isSubmitting ? "Processing..." : "Proceed to Payment"}

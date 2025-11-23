@@ -1,14 +1,17 @@
 import { LogIn, Menu, QrCode, ShoppingCart, User, X } from "lucide-react";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useCart } from "../../../context/Cart/CartContext";
 import { useAuth } from "@clerk/clerk-react";
 
 function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Mobile menu
-  const [profileOpen, setProfileOpen] = useState(false); // Profile dropdown
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const { cartItems } = useCart();
   const { isSignedIn } = useAuth();
+
+  const location = useLocation();
+  const path = location.pathname;
 
   return (
     <header
@@ -56,15 +59,31 @@ function Header() {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-8 text-primary/90">
-          <Link to={"/"} className="hover:text-orange-400">
+          <Link
+            to="/"
+            className={`${
+              path === "/" ? "text-orange-400" : "text-primary/90"
+            } hover:text-orange-400`}
+          >
             Home
           </Link>
-          <Link to={"categories"} className="hover:text-orange-400">
+
+          <Link
+            to="/categories"
+            className={`${
+              path.startsWith("/categories")
+                ? "text-orange-400"
+                : "text-primary/90"
+            } hover:text-orange-400`}
+          >
             Categories
           </Link>
+
           <Link
-            to={"verify"}
-            className="flex items-center gap-1 hover:text-orange-400"
+            to="/verify"
+            className={`flex items-center gap-1 ${
+              path.startsWith("/verify") ? "text-orange-400" : "text-primary/90"
+            } hover:text-orange-400`}
           >
             <QrCode size={18} />
             <span>Verify Medicine</span>
