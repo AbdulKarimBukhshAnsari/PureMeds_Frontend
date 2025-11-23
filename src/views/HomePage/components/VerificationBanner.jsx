@@ -1,10 +1,8 @@
-
 import { motion } from "framer-motion";
 import { QrCode } from "lucide-react";
 import { Link } from "react-router-dom";
 import { FadeInWhenVisible } from "../../../components/ui/Animation/ScrollAnimation";
 import { SECTION_TITLES } from "../../../constants/home.constants";
-import img from "../../../assets/bg17.png"; // <— your small illustration
 
 function VerificationBanner() {
   return (
@@ -40,15 +38,17 @@ function VerificationBanner() {
               {/* Right: Button */}
               <div className="mt-6 md:mt-0 flex-shrink-0">
                 <Link to={"/verify"}>
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <button className="bg-orange-500 text-white hover:bg-orange-600 transition-all duration-300 rounded-xl px-8 py-3 flex items-center gap-2 font-semibold shadow-md">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <button className="bg-orange-500 text-white hover:bg-gradient-to-r hover:from-primary hover:to-orange-400 transition-all duration-300 rounded-xl px-8 py-3 flex items-center gap-2 font-semibold shadow-md">
                       <QrCode size={20} />
                       {SECTION_TITLES.verification.buttonText}
                     </button>
                   </motion.div>
                 </Link>
               </div>
-
             </div>
           </motion.div>
         </FadeInWhenVisible>

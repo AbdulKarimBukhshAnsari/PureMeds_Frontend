@@ -105,7 +105,7 @@ const Categories = () => {
   }));
 
   return (
-    <div className="bg-orange-50/30">
+    <div className="bg-background">
       <div className="container mx-auto px-2 py-30">
         <FadeInLeft>
           <div className="mb-5 p-4 text-center">
@@ -168,7 +168,7 @@ const Categories = () => {
               className="absolute -left-4 z-10 bg-primary/90 text-orange-400 hover:bg-teal-150 rounded-full shadow-md p-2"
               style={{ transform: "translateY(-50%)", top: "50%" }}
             >
-              <ChevronLeft className="h-5 w-5" strokeWidth={4}/>
+              <ChevronLeft className="h-5 w-5" strokeWidth={4} />
             </button>
           )}
 
@@ -199,7 +199,7 @@ const Categories = () => {
               className="absolute -right-4 z-10 bg-primary/90 text-orange-400 hover:bg-teal-150 rounded-full shadow-md p-2"
               style={{ transform: "translateY(-50%)", top: "50%" }}
             >
-              <ChevronRight className="h-5 w-5"  strokeWidth={4}/>
+              <ChevronRight className="h-5 w-5" strokeWidth={4} />
             </button>
           )}
         </div>
