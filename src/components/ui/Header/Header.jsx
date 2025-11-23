@@ -76,7 +76,7 @@ function Header() {
           {/* Cart Icon */}
           <Link
             to={"/cart"}
-            className="relative text-support hover:text-primary transition-colors"
+            className="relative text-support hover:text-orange-400 transition-colors"
           >
             <ShoppingCart size={22} />
             {cartItems.length > 0 && (
@@ -108,21 +108,21 @@ function Header() {
               >
                 <Link
                   to="/dashboard"
-                  className="block px-4 py-2 text-sm hover:bg-primary/10 transition-colors"
+                  className="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-orange-400 transition-colors"
                   onClick={() => setProfileOpen(false)}
                 >
                   Orders
                 </Link>
                 <Link
                   to="/dashboard/user-complaints"
-                  className="block px-4 py-2 text-sm hover:bg-primary/10 cursor-pointer transition-colors"
+                  className="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-orange-400 cursor-pointer transition-colors"
                   onClick={() => setProfileOpen(false)}
                 >
                   Complaints
                 </Link>
                 <Link to={"/dashboard/user-profile"}>
                   <div
-                    className="block px-4 py-2 text-sm hover:bg-primary/10 cursor-pointer transition-colors"
+                    className="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-orange-400 cursor-pointer transition-colors"
                     onClick={() => setProfileOpen(false)}
                   >
                     Profile

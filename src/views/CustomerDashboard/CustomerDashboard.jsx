@@ -62,7 +62,7 @@ function CustomerDashboard() {
           >
             <div className="bg-white rounded-lg shadow-sm overflow-hidden mt-10">
               <div className="p-6 border-b border-gray-200">
-                <h2 className="text-lg font-bold text-primary">Dashboard</h2>
+                <h2 className="text-lg font-bold text-orange-400">Dashboard</h2>
               </div>
               <nav className="p-4">
                 <ul className="space-y-2">
@@ -77,13 +77,7 @@ function CustomerDashboard() {
                             : "text-gray-700 hover:bg-gray-100"
                         }`}
                       >
-                        <span
-                          className={`mr-3 ${
-                            isActive(item.path)
-                              ? "text-primary"
-                              : "text-primary/60"
-                          }`}
-                        >
+                        <span className="mr-3 text-orange-400">
                           {item.icon}
                         </span>
                         {item.label}
@@ -101,7 +95,7 @@ function CustomerDashboard() {
                           console.log("Logging out...");
                         }}
                       >
-                        <LogOut className="h-5 w-5 text-primary/60 mr-3" />
+                        <LogOut className="h-5 w-5 text-orange-400 mr-3" />
                         Logout
                       </button>
                     </SignOutButton>

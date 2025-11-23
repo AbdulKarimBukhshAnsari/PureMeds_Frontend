@@ -33,7 +33,7 @@ function UserComplaints() {
     isAsync: false,
   });
   const [deletingComplaint, setDeletingComplaint] = useState(null);
-   const [toast, showSuccess, showError, hideToast] = useToast();
+  const [toast, showSuccess, showError, hideToast] = useToast();
 
   useEffect(() => {
     const fetchComplaints = async () => {
@@ -77,7 +77,6 @@ function UserComplaints() {
   };
 
   const handleDeleteClick = async (complaintId) => {
-
     try {
       setDeletingComplaint(complaintId);
       const token = await getToken({ template: "puremeds" });
@@ -85,7 +84,7 @@ function UserComplaints() {
         throw new Error("Authentication required");
       }
       await deleteComplaint(complaintId, token);
-      showSuccess("Complaint successfully deleted.")
+      showSuccess("Complaint successfully deleted.");
       // Refresh complaints list
       const response = await getComplaintsByUserId(token);
       if (response?.data) {
@@ -93,7 +92,7 @@ function UserComplaints() {
       }
     } catch (error) {
       console.error("Error deleting complaint:", error);
-      showError("Failed to delete complaint. Please try again.")
+      showError("Failed to delete complaint. Please try again.");
     } finally {
       setDeletingComplaint(null);
     }
@@ -112,7 +111,7 @@ function UserComplaints() {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-primary">My Complaints</h2>
         <Link to={"/complaint"}>
-          <Button variant="primary" size="sm">
+          <Button variant="" className="bg-orange-400 text-white" size="sm">
             New Complaint
           </Button>
         </Link>
