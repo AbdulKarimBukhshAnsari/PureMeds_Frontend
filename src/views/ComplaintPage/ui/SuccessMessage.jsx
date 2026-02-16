@@ -24,7 +24,8 @@ const SuccessMessage = ({ onReset }) => (
       </button>
 
       <button
-        onClick={onReset}
+       // I have to redirect to the page to complaint page 
+        onClick={() => window.location.href = '/dashboard/user-complaints'}
         className="text-primary flex items-center gap-2 cursor-pointer mt-2"
       >
         <ArrowLeft size={18} />
